@@ -4,6 +4,10 @@ import commonjs from '@rollup/plugin-commonjs';
 import typescript from '@rollup/plugin-typescript';
 import postcss from 'rollup-plugin-postcss';
 import dts from 'rollup-plugin-dts';
+import path from 'path';
+import svgr from '@svgr/rollup';
+import image from 'rollup-plugin-image';
+import alias from 'rollup-plugin-alias';
 
 import { createRequire } from 'node:module';
 const requireFile = createRequire(import.meta.url);
@@ -26,9 +30,33 @@ export default [
     ],
     plugins: [
       peerDepsExternal(),
+      alias({
+        entries: [
+          {
+            find: '@components',
+            replacement: path.resolve(__dirname, 'src/components'),
+          },
+          { find: '@icons', replacement: path.resolve(__dirname, 'src/icons') },
+          {
+            find: '@constants',
+            replacement: path.resolve(__dirname, 'src/constants'),
+          },
+          {
+            find: '@decorators',
+            replacement: path.resolve(__dirname, 'src/decorators'),
+          },
+          {
+            find: '@services',
+            replacement: path.resolve(__dirname, 'src/services'),
+          },
+          { find: '*', replacement: path.resolve(__dirname, 'src/types') },
+        ],
+      }),
       resolve(),
       commonjs(),
       typescript(),
+      svgr(),
+      image(),
       postcss({
         extensions: ['.css'],
       }),
