@@ -12,17 +12,19 @@ export const NavigationWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0 10px;
-  margin-bottom: 10px;
+`;
 
-  button {
-    background: none;
-    border: none;
-    color: #007bff;
-    font-size: 16px;
-    cursor: pointer;
+export const NavigationButton = styled.button`
+  background: none;
+  display: flex;
+  align-items: center;
+  border: none;
+  color: #007bff;
+  font-size: 16px;
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+  opacity: ${(props) => (props.disabled ? 0.2 : 1)};
 
-    &:hover {
-      color: #0056b3;
-    }
+  &:hover {
+    color: #0056b3;
   }
 `;

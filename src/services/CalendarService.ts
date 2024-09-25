@@ -1,5 +1,13 @@
+import { useState } from 'react';
+
 export interface ICalendar {
-  getDaysInMonth(date: Date, startOfWeek: string): Date[];
+  getDaysInMonth(
+    date: Date,
+    startOfWeek: string,
+    minDate?: Date,
+    maxDate?: Date,
+    rangeYears?: [number, number],
+  ): Date[];
 }
 export enum WeekStart {
   Sunday = 'sunday',
@@ -7,10 +15,42 @@ export enum WeekStart {
 }
 
 export class BaseCalendar implements ICalendar {
-  getDaysInMonth(date: Date, startOfWeek: string): Date[] {
+  getDaysInMonth(
+    date: Date,
+    startOfWeek: string,
+    minDate?: Date,
+    maxDate?: Date,
+    rangeYears?: [number, number],
+  ): Date[] {
     const days: Date[] = [];
-    const year = date.getFullYear();
-    const month = date.getMonth();
+    let year = date.getFullYear();
+    let month = date.getMonth();
+
+    // if (rangeYears) {
+    //   const [minYear, maxYear] = rangeYears;
+    //   if (year < minYear) {
+    //     year = minYear;
+    //   } else if (year > maxYear) {
+    //     year = maxYear;
+    //   }
+    // }
+
+    if (rangeYears) {
+      if (year < rangeYears[0] || year > rangeYears[1]) {
+        console.log(year < rangeYears[0] || year > rangeYears[1]);
+
+        year = rangeYears[0];
+        month = 0;
+      }
+    }
+
+    //   if (year < rangeYears[0] || year > rangeYears[1]) {
+    //     year = rangeYears[0];
+    //     month = 0; // Январь
+    //   }
+    // }
+
+    console.log(year);
 
     const firstDay = new Date(year, month, 1);
     const lastDay = new Date(year, month + 1, 0);

@@ -2,9 +2,7 @@ import { memo, useMemo } from 'react';
 import React from 'react';
 import { WeekdaysRow } from './styled';
 import { WeekStart } from '@services/CalendarService';
-
-const weekdaysSundayStart = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-const weekdaysMondayStart = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+import { weekdaysMondayStart, weekdaysSundayStart } from '@constants/constants';
 
 const Weekdays = ({ startOfWeek }: { startOfWeek: string }) => {
   const weekdays = useMemo(
