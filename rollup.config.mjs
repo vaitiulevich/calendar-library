@@ -49,7 +49,11 @@ export default [
             find: '@services',
             replacement: path.resolve(__dirname, 'src/services'),
           },
-          { find: '*', replacement: path.resolve(__dirname, 'src/types') },
+          {
+            find: '@types',
+            replacement: path.resolve(__dirname, 'src/types'),
+          },
+          { find: '*', replacement: path.resolve(__dirname, 'src/') },
         ],
       }),
       resolve(),

@@ -3,39 +3,35 @@ import { DecadeHeader, NavigationButton } from './styled';
 import { images } from '@constants/images';
 
 interface NavigationYearsProps {
-  currentDecade: number;
+  currentYear: number;
   rangeYears: [number, number];
-  handleSetDecade: (stepDecade: number) => void;
+  handleSetYear: (stepDecade: number) => void;
 }
 
 const NavigationYears: React.FC<NavigationYearsProps> = ({
-  currentDecade,
-  handleSetDecade,
+  currentYear,
+  handleSetYear,
   rangeYears,
 }) => {
-  const startYear = currentDecade;
-  const endYear = currentDecade + 9;
-
   const handlePrevDecade = () => {
-    handleSetDecade(-10);
+    handleSetYear(currentYear - 1);
   };
-
   const handleNextDecade = () => {
-    handleSetDecade(10);
+    handleSetYear(currentYear + 1);
   };
 
   return (
     <DecadeHeader>
       <NavigationButton
         onClick={handlePrevDecade}
-        disabled={currentDecade <= rangeYears[0]}
+        disabled={currentYear <= rangeYears[0]}
       >
         <img src={images.prevYear} alt="prev" />
       </NavigationButton>
-      {startYear} - {endYear}
+      {currentYear}
       <NavigationButton
         onClick={handleNextDecade}
-        disabled={endYear >= rangeYears[1]}
+        disabled={currentYear >= rangeYears[1]}
       >
         <img src={images.nextYear} alt="next" />
       </NavigationButton>

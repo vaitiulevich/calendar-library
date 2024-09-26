@@ -1,18 +1,18 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { BaseCalendar } from '@services/CalendarService';
-import Days from '@components/Days/Days';
+import MonthGrid from '@components/MonthGrid/MonthGrid';
 
-const meta: Meta<typeof Days> = {
+const meta: Meta<typeof MonthGrid> = {
   title: 'DaysGrids',
-  component: Days,
+  component: MonthGrid,
   argTypes: {
     fillTodayColor: { control: 'color' },
   },
 };
 
 export default meta;
-type Story = StoryObj<typeof Days>;
+type Story = StoryObj<typeof MonthGrid>;
 const baseCalendar = new BaseCalendar();
 export const DaysGrid: Story = {
   args: {

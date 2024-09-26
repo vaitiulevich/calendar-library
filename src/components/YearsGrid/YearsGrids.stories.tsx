@@ -12,7 +12,7 @@ type Story = StoryObj<typeof YearsGrid>;
 
 export const DaysGrid: Story = {
   args: {
-    currentDecade: new Date().getFullYear(),
+    currentYear: new Date().getFullYear(),
     rangeYears: [2010, 2040],
     handleSetYear: (year) => {
       console.log(year);

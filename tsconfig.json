@@ -24,7 +24,8 @@
       "@constants/*": ["constants/*"],
       "@decorators/*": ["decorators/*"],
       "@services/*": ["services/*"],
-      "/*": ["types/*"]
+      "@types/*": ["types/*"],
+      "/*": ["/*"]
     }
   },
   "include": ["src", "svg.d.ts"],
