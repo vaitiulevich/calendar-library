@@ -10,13 +10,11 @@ const CalendarHeader = ({
   onSetYear,
   onSetMonth,
   rangeYears,
-  handleSetYear,
 }: {
   type: string;
   currentDate: Date;
   onSetMonth: (month: number) => void;
   onSetYear: (year: number) => void;
-  handleSetYear: (year: number) => void;
   rangeYears: [number, number];
 }) => {
   switch (type) {
@@ -34,7 +32,7 @@ const CalendarHeader = ({
         <NavigationYears
           currentYear={currentDate.getFullYear()}
           rangeYears={rangeYears}
-          handleSetYear={handleSetYear}
+          handleSetYear={onSetYear}
         />
       );
   }

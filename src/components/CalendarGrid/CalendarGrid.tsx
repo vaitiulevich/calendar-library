@@ -1,25 +1,12 @@
 import { memo } from 'react';
 import React from 'react';
 import { IHoliday } from '@components/Calendar/Calendar';
-import MonthGrid from '@components/MonthGrid';
 import YearsGrid from '@components/YearsGrid/YearsGrid';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
+import withCalendarEnhancements from '@decorators/withCalendarEnhancements';
+import MonthGrid from '@components/MonthGrid/MonthGrid';
 
-const CalendarGrid = ({
-  type,
-  days,
-  currentDate,
-  today,
-  minDate,
-  maxDate,
-  fillTodayColor = '#007bff',
-  fillHolidayColor = '#aa6af4',
-  isShowWeekDays,
-  holidays,
-  startOfWeek = WeekStart.Monday,
-  rangeYears,
-  handleSetYear,
-}: {
+interface IWeekStartProps {
   type: string;
   days: Date[];
   currentDate: Date;
@@ -31,9 +18,21 @@ const CalendarGrid = ({
   isShowWeekDays?: boolean;
   holidays?: IHoliday[];
   startOfWeek?: string;
-  rangeYears: [number, number];
-  handleSetYear: (year: number) => void;
-}) => {
+}
+
+const CalendarGrid = ({
+  type,
+  days,
+  currentDate,
+  today,
+  minDate,
+  maxDate,
+  fillTodayColor,
+  fillHolidayColor,
+  isShowWeekDays,
+  holidays,
+  startOfWeek = WeekStart.Monday,
+}: IWeekStartProps) => {
   switch (type) {
     case CalendarTypes.Month:
       return (
@@ -54,9 +53,9 @@ const CalendarGrid = ({
       return (
         <YearsGrid
           today={today}
+          fillTodayColor={fillTodayColor}
+          fillHolidayColor={fillHolidayColor}
           currentYear={currentDate.getFullYear()}
-          rangeYears={rangeYears}
-          handleSetYear={handleSetYear}
         />
       );
   }

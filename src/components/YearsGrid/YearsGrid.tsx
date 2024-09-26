@@ -1,44 +1,42 @@
-import React, { useEffect, useMemo, useState } from 'react';
-import { YearButton, YearsGridWrapper } from './styled';
-import Days from '@components/MonthGrid/MonthGrid';
-import { BaseCalendar } from '@services/CalendarService';
+import React, { useEffect, useMemo } from 'react';
+import { MonthTitle, YearButton, YearsGridWrapper } from './styled';
 import { months } from '@constants/constants';
 import { WeekStart } from '@services/CalendarEnums';
+import { useCalendar } from '@utils/useCalendar';
+import MonthGrid from '@components/MonthGrid/MonthGrid';
 
 interface YearsGridProps {
   today: Date;
   currentYear: number;
-  rangeYears: [number, number];
-  handleSetYear: (year: number) => void;
+  fillTodayColor?: string;
+  fillHolidayColor?: string;
 }
 
 const YearsGrid: React.FC<YearsGridProps> = ({
   today,
   currentYear,
-  handleSetYear,
+  fillHolidayColor,
+  fillTodayColor,
 }) => {
-  const baseCalendar = useMemo(() => new BaseCalendar(), []);
+  const renderYears = () => {
+    return months.map((month, index) => {
+      const thisMonthDate = new Date(currentYear, index, 1);
+      // console.log(thisMonthDate);
 
-  const daysInMonths = useMemo(() => {
-    return months.map((_, index) => {
-      return baseCalendar.getDaysInMonth(
-        new Date(currentYear, index, 1),
-        WeekStart.Monday,
+      const { days } = useCalendar(thisMonthDate, WeekStart.Monday);
+      return (
+        <YearButton key={month}>
+          <MonthTitle>{month}</MonthTitle>
+          <MonthGrid
+            currentDate={thisMonthDate}
+            fillTodayColor={fillTodayColor}
+            fillHolidayColor={fillHolidayColor}
+            today={today}
+            days={days}
+          />
+        </YearButton>
       );
     });
-  }, [currentYear, baseCalendar]);
-
-  const renderYears = () => {
-    return months.map((month, index) => (
-      <YearButton key={month} onClick={() => handleSetYear(currentYear)}>
-        {month}
-        <Days
-          currentDate={new Date(currentYear, index, 1)}
-          today={today}
-          days={daysInMonths[index]}
-        />
-      </YearButton>
-    ));
   };
 
   return <YearsGridWrapper>{renderYears()}</YearsGridWrapper>;
