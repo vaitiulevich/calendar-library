@@ -16,8 +16,17 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": "./src",
+    "paths": {
+      "@components/*": ["components/*"],
+      "@icons/*": ["icons/*"],
+      "@constants/*": ["constants/*"],
+      "@decorators/*": ["decorators/*"],
+      "@services/*": ["services/*"],
+      "/*": ["types/*"]
+    }
   },
-  "include": ["src"],
+  "include": ["src", "svg.d.ts"],
   "exclude": ["node_modules", "lib"]
 }
