@@ -19,3 +19,26 @@ export const holidays = [
 
 export const weekdaysSundayStart = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 export const weekdaysMondayStart = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+
+export const months = [
+  'January',
+  'February',
+  'March',
+  'April',
+  'May',
+  'June',
+  'July',
+  'August',
+  'September',
+  'October',
+  'November',
+  'December',
+];
+
+export const defMinDate = new Date(
+  new Date().setFullYear(new Date().getFullYear() - 1),
+);
+export const defMaxDate = new Date(
+  new Date().setFullYear(new Date().getFullYear() + 1),
+);
+export const defRange: [number, number] = [2013, 2064];

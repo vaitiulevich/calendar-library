@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { WeekStart } from './CalendarEnums';
 
 export interface ICalendar {
   getDaysInMonth(
@@ -8,10 +9,6 @@ export interface ICalendar {
     maxDate?: Date,
     rangeYears?: [number, number],
   ): Date[];
-}
-export enum WeekStart {
-  Sunday = 'sunday',
-  Monday = 'monday',
 }
 
 export class BaseCalendar implements ICalendar {

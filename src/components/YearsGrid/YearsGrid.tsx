@@ -1,37 +1,46 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { YearButton, YearsGridWrapper } from './styled';
+import Days from '@components/MonthGrid/MonthGrid';
+import { BaseCalendar } from '@services/CalendarService';
+import { months } from '@constants/constants';
+import { WeekStart } from '@services/CalendarEnums';
 
 interface YearsGridProps {
   today: Date;
-  currentDecade: number;
+  currentYear: number;
   rangeYears: [number, number];
   handleSetYear: (year: number) => void;
 }
 
 const YearsGrid: React.FC<YearsGridProps> = ({
   today,
-  currentDecade,
-  rangeYears,
+  currentYear,
   handleSetYear,
 }) => {
-  const years = useMemo(() => {
-    const startYear = currentDecade;
-    return Array.from({ length: 10 }, (_, i) => startYear + i).filter(
-      (year) => year <= rangeYears[1],
-    );
-  }, [currentDecade, rangeYears]);
+  const baseCalendar = useMemo(() => new BaseCalendar(), []);
+
+  const daysInMonths = useMemo(() => {
+    return months.map((_, index) => {
+      return baseCalendar.getDaysInMonth(
+        new Date(currentYear, index, 1),
+        WeekStart.Monday,
+      );
+    });
+  }, [currentYear, baseCalendar]);
 
   const renderYears = () => {
-    return years.map((year) => (
-      <YearButton
-        istoday={today.getFullYear() === year}
-        key={year}
-        onClick={() => handleSetYear(year)}
-      >
-        {year}
+    return months.map((month, index) => (
+      <YearButton key={month} onClick={() => handleSetYear(currentYear)}>
+        {month}
+        <Days
+          currentDate={new Date(currentYear, index, 1)}
+          today={today}
+          days={daysInMonths[index]}
+        />
       </YearButton>
     ));
   };
+
   return <YearsGridWrapper>{renderYears()}</YearsGridWrapper>;
 };
 

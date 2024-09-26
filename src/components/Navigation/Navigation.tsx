@@ -5,29 +5,25 @@ import { images } from '@constants/images';
 
 const Navigation = ({
   currentDate,
-  onPrevMonth,
-  onNextMonth,
-  onPrevYear,
-  onNextYear,
+  onSetMonth,
+  onSetYear,
   rangeYears,
 }: {
   currentDate: Date;
-  onPrevMonth: () => void;
-  onNextMonth: () => void;
-  onPrevYear: () => void;
-  onNextYear: () => void;
+  onSetMonth: (month: number) => void;
+  onSetYear: (year: number) => void;
   rangeYears: [number, number];
 }) => {
   return (
     <NavigationWrapper>
       <NavigationButton
         disabled={currentDate.getFullYear() - 1 !== rangeYears[0]}
-        onClick={onPrevYear}
+        onClick={() => onSetYear(currentDate.getFullYear() - 1)}
       >
         <img src={images.prevYear} alt="prev year" />
       </NavigationButton>
       <NavigationButton
-        onClick={onPrevMonth}
+        onClick={() => onSetMonth(currentDate.getMonth() - 1)}
         disabled={
           currentDate.getFullYear() === rangeYears[0] &&
           currentDate.getMonth() === 0
@@ -43,7 +39,7 @@ const Navigation = ({
       </MonthHeader>
 
       <NavigationButton
-        onClick={onNextMonth}
+        onClick={() => onSetMonth(currentDate.getMonth() + 1)}
         disabled={
           currentDate.getFullYear() === rangeYears[1] &&
           currentDate.getMonth() === 11
@@ -53,7 +49,7 @@ const Navigation = ({
       </NavigationButton>
       <NavigationButton
         disabled={currentDate.getFullYear() + 1 !== rangeYears[1]}
-        onClick={onNextYear}
+        onClick={() => onSetYear(currentDate.getFullYear() + 1)}
       >
         <img src={images.nextYear} alt="next year" />
       </NavigationButton>

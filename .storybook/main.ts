@@ -24,6 +24,7 @@ const config: StorybookConfig = {
         '@constants': path.resolve(__dirname, '../src/constants'),
         '@decorators': path.resolve(__dirname, '../src/decorators'),
         '@services': path.resolve(__dirname, '../src/services'),
+        '@types': path.resolve(__dirname, '../src/types'),
       };
     }
     return config;

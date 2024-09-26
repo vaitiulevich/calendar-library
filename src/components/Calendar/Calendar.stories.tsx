@@ -1,8 +1,8 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import Calendar from './Calendar';
-import { WeekStart } from '@services/CalendarService';
 import { holidays } from '@constants/constants';
+import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
 
 const meta: Meta<typeof Calendar> = {
   title: 'Calendar',
@@ -19,7 +19,6 @@ type Story = StoryObj<typeof Calendar>;
 export const Basic: Story = {
   args: {
     label: 'Basic',
-    // type: 'basic',
     maxDate: new Date('01.09.2024'),
     minDate: new Date('01.10.2024'),
     isShowWeekDays: false,
@@ -38,7 +37,7 @@ export const YaersTypeCalendar: Story = {
   args: {
     ...Basic.args,
     label: 'YaersTypeCalendar',
-    type: 'year',
+    type: CalendarTypes.Yaer,
   },
 };
 

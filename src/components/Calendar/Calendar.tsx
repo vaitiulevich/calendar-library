@@ -2,22 +2,21 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { CalendarWrapper } from './styled';
 import { BaseCalendar } from '@services/CalendarService';
 import { HighlightTodayDecorator } from '@decorators/CalendarDecorator';
-import Navigation from '@components/Navigation/Navigation';
-import Weekdays from '@components/Weekdays/Weekdays';
-import Days from '@components/Days/Days';
-import YearsGrid from '@components/YearsGrid/YearsGrid';
-import NavigationYears from '@components/NavigationYear/NavigationYear';
+import CalendarHeader from '@components/CalendarHeader/CalendarHeader';
+import CalendarGrid from '@components/CalendarGrid/CalendarGrid';
+import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
+import { defMaxDate, defMinDate, defRange } from '@constants/constants';
 
 export interface IHoliday {
   title: string;
   date: Date;
 }
 export interface CalendarProps {
-  type?: 'month' | 'week' | 'year';
+  type?: CalendarTypes.Month | CalendarTypes.Week | CalendarTypes.Yaer;
   fillTodayColor?: string;
   fillHolidayColor?: string;
   label: string;
-  startOfWeek?: 'sunday' | 'monday';
+  startOfWeek?: WeekStart.Sunday | WeekStart.Monday;
   rangeYears: [number, number];
   minDate?: Date;
   maxDate?: Date;
@@ -27,11 +26,11 @@ export interface CalendarProps {
 }
 
 const Calendar = ({
-  type = 'month',
-  minDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
-  startOfWeek = 'monday',
-  rangeYears = [2013, 2064],
+  type = CalendarTypes.Month,
+  minDate = defMinDate,
+  maxDate = defMaxDate,
+  startOfWeek = WeekStart.Monday,
+  rangeYears = defRange,
   fillTodayColor = '#007bff',
   fillHolidayColor,
   isShowWeekDays = false,
@@ -49,9 +48,6 @@ const Calendar = ({
     }
     return today;
   });
-  const [currentDecade, setCurrentDecade] = useState(
-    () => Math.floor(today.getFullYear() / 10) * 10,
-  );
 
   const baseCalendar = useMemo(() => new BaseCalendar(), []);
   const highlightTodayCalendar = useMemo(
@@ -103,9 +99,6 @@ const Calendar = ({
     [updateDaysForMonth],
   );
 
-  const handleSetDecade = (stepDecade: number) => {
-    setCurrentDecade(currentDecade + stepDecade);
-  };
   useEffect(() => {
     setDays(
       new HighlightTodayDecorator(new BaseCalendar()).getDaysInMonth(
@@ -117,44 +110,30 @@ const Calendar = ({
 
   return (
     <CalendarWrapper>
-      {type === 'month' ? (
-        <>
-          <Navigation
-            currentDate={currentDate}
-            onPrevMonth={() => handleSetMonth(currentDate.getMonth() - 1)}
-            onNextMonth={() => handleSetMonth(currentDate.getMonth() + 1)}
-            onPrevYear={() => handleSetYear(currentDate.getFullYear() - 1)}
-            onNextYear={() => handleSetYear(currentDate.getFullYear() + 1)}
-            rangeYears={rangeYears}
-          />
-          <Weekdays startOfWeek={startOfWeek} />
-          <Days
-            days={days}
-            holidays={holidays}
-            currentDate={currentDate}
-            today={today}
-            minDate={minDate}
-            maxDate={maxDate}
-            fillTodayColor={fillTodayColor}
-            fillHolidayColor={fillHolidayColor}
-            isShowWeekDays={isShowWeekDays}
-          />
-        </>
-      ) : (
-        <>
-          <NavigationYears
-            currentDecade={currentDecade}
-            rangeYears={rangeYears}
-            handleSetDecade={handleSetDecade}
-          />
-          <YearsGrid
-            today={today}
-            currentDecade={currentDecade}
-            rangeYears={rangeYears}
-            handleSetYear={handleSetYear}
-          />
-        </>
-      )}
+      <CalendarHeader
+        type={type}
+        currentDate={currentDate}
+        onSetMonth={handleSetMonth}
+        onSetYear={handleSetYear}
+        rangeYears={rangeYears}
+        handleSetYear={handleSetYear}
+      />
+
+      <CalendarGrid
+        type={type}
+        days={days}
+        startOfWeek={startOfWeek}
+        holidays={holidays}
+        currentDate={currentDate}
+        today={today}
+        minDate={minDate}
+        maxDate={maxDate}
+        fillTodayColor={fillTodayColor}
+        fillHolidayColor={fillHolidayColor}
+        isShowWeekDays={isShowWeekDays}
+        rangeYears={rangeYears}
+        handleSetYear={handleSetYear}
+      />
     </CalendarWrapper>
   );
 };
