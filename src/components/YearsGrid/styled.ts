@@ -5,13 +5,16 @@ export const YearsGridWrapper = styled.div`
   grid-template-columns: repeat(3, 1fr);
 `;
 
+export const MonthTitle = styled.h4`
+  margin: 0;
+`;
+
 export const YearButton = styled.div<{ istoday?: boolean }>`
   font-size: 12px;
-  /* background-color: ${({ istoday }) => (istoday ? '#007bff' : 'none')}; */
+  min-height: 8rem;
   color: ${({ istoday }) => (istoday ? '#fff' : '#000')};
   border: 0.1rem solid transparent;
   border-radius: 5px;
-  /* padding: 10px; */
   margin: 5px;
   cursor: pointer;
   transition: background-color 0.3s;

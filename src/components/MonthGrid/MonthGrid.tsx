@@ -4,6 +4,7 @@ import { DayButton, DaysGrid } from './styled';
 import { IHoliday } from '@components/Calendar/Calendar';
 import Weekdays from '@components/Weekdays/Weekdays';
 import { WeekStart } from '@services/CalendarEnums';
+import { isHoliday, isWeekday } from '@utils/CalendarDayTypes';
 
 interface IMonth {
   days: Date[];
@@ -18,50 +19,49 @@ interface IMonth {
   startOfWeek?: string;
 }
 
+export interface ICalendar {
+  getDaysInMonth(
+    date: Date,
+    startOfWeek: string,
+    minDate?: Date,
+    maxDate?: Date,
+    rangeYears?: [number, number],
+  ): Date[];
+}
+
 const MonthGrid = ({
   days,
   currentDate,
   today,
   minDate,
   maxDate,
-  fillTodayColor = '#007bff',
-  fillHolidayColor = '#aa6af4',
+  fillTodayColor,
+  fillHolidayColor,
   isShowWeekDays,
   holidays,
   startOfWeek = WeekStart.Monday,
 }: IMonth) => {
-  console.log('currentDate', currentDate.getMonth());
   const renderDays = () => {
     return days.map((day, index) => {
-      const isDisabled = !isDateWithinRange(day);
-      const isHoliday =
-        holidays?.some((item) => {
-          const holidayDate = new Date(item.date);
-          return holidayDate.toDateString() === day.toDateString();
-        }) ?? false;
-      const isWeekDay =
-        isShowWeekDays &&
-        (day.getDay() == 0 || day.getDay() == 6 ? true : false);
+      const isDisabled = day.getMonth() === currentDate.getMonth();
+      const isHolidayDate = isHoliday(day, holidays);
+      const isWeekDay = (isShowWeekDays && isWeekday(day)) ?? false;
+      const isToday = day.toDateString() === today.toDateString();
       return (
         <DayButton
           key={index}
-          istoday={day.toDateString() === today.toDateString()}
+          istoday={isToday}
           isweekday={isWeekDay}
-          isholiday={isHoliday}
+          isholiday={isHolidayDate}
           filltoday={fillTodayColor}
           fillholiday={fillHolidayColor}
-          isdisabled={day.getMonth() === currentDate.getMonth()}
-          disabled={isDisabled}
+          isdisabled={isDisabled}
         >
           {day.getDate()}
         </DayButton>
       );
     });
   };
-  const isDateWithinRange = (day: Date) => {
-    return (!minDate || day >= minDate) && (!maxDate || day <= maxDate);
-  };
-
   return (
     <>
       <Weekdays startOfWeek={startOfWeek} />
