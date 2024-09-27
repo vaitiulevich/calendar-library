@@ -58,7 +58,7 @@ export const DayButton = styled.button<{
   }
 `;
 
-export const DaysGrid = styled.div`
+export const DaysGridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;

@@ -4,7 +4,7 @@ import { IHoliday } from '@components/Calendar/Calendar';
 import YearsGrid from '@components/YearsGrid/YearsGrid';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
 import withCalendarEnhancements from '@decorators/withCalendarEnhancements';
-import MonthGrid from '@components/MonthGrid/MonthGrid';
+import DaysGrid from '@components/DaysGrid/DaysGrid';
 
 interface IWeekStartProps {
   type: string;
@@ -18,6 +18,7 @@ interface IWeekStartProps {
   isShowWeekDays?: boolean;
   holidays?: IHoliday[];
   startOfWeek?: string;
+  weeks: Date[];
 }
 
 const CalendarGrid = ({
@@ -32,11 +33,13 @@ const CalendarGrid = ({
   isShowWeekDays,
   holidays,
   startOfWeek = WeekStart.Monday,
+  weeks,
 }: IWeekStartProps) => {
+  console.log(weeks);
   switch (type) {
     case CalendarTypes.Month:
       return (
-        <MonthGrid
+        <DaysGrid
           days={days}
           startOfWeek={startOfWeek}
           holidays={holidays}
@@ -56,6 +59,14 @@ const CalendarGrid = ({
           fillTodayColor={fillTodayColor}
           fillHolidayColor={fillHolidayColor}
           currentYear={currentDate.getFullYear()}
+        />
+      );
+    case CalendarTypes.Week:
+      return (
+        <DaysGrid
+          days={weeks || days}
+          currentDate={currentDate}
+          today={today}
         />
       );
   }

@@ -1,7 +1,5 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React from 'react';
 import { CalendarWrapper } from './styled';
-// import { BaseCalendar } from '@services/CalendarService';
-// import { HighlightTodayDecorator } from '@decorators/CalendarDecorator';
 import CalendarHeader from '@components/CalendarHeader/CalendarHeader';
 import CalendarGrid from '@components/CalendarGrid/CalendarGrid';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
@@ -41,13 +39,15 @@ const Calendar = ({
 }: CalendarProps) => {
   const today = new Date();
 
-  const { currentDate, days, handleSetMonth, handleSetYear } = useCalendar(
-    today,
-    startOfWeek,
-    minDate,
-    maxDate,
-    rangeYears,
-  );
+  const {
+    currentDate,
+    days,
+    handleSetMonth,
+    handleSetYear,
+    handleSetWeek,
+    weekOffset,
+    weeks,
+  } = useCalendar(today, startOfWeek, minDate, maxDate, rangeYears);
 
   return (
     <CalendarWrapper>
@@ -56,12 +56,18 @@ const Calendar = ({
         currentDate={currentDate}
         onSetMonth={handleSetMonth}
         onSetYear={handleSetYear}
+        onSetWeek={handleSetWeek}
         rangeYears={rangeYears}
+        today={today}
+        days={days}
+        weekOffset={weekOffset}
+        weeks={weeks}
       />
 
       <CalendarGrid
         type={type}
         days={days}
+        weeks={weeks[weekOffset]}
         startOfWeek={startOfWeek}
         holidays={holidays}
         currentDate={currentDate}

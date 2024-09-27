@@ -1,12 +1,12 @@
 import { memo } from 'react';
 import React from 'react';
-import { DayButton, DaysGrid } from './styled';
+import { DayButton, DaysGridContainer } from './styled';
 import { IHoliday } from '@components/Calendar/Calendar';
 import Weekdays from '@components/Weekdays/Weekdays';
 import { WeekStart } from '@services/CalendarEnums';
 import { isHoliday, isWeekday } from '@utils/CalendarDayTypes';
 
-interface IMonth {
+interface IDays {
   days: Date[];
   currentDate: Date;
   today: Date;
@@ -29,18 +29,18 @@ export interface ICalendar {
   ): Date[];
 }
 
-const MonthGrid = ({
+const DaysGrid = ({
   days,
   currentDate,
   today,
   minDate,
   maxDate,
-  fillTodayColor,
+  fillTodayColor = '#007bff',
   fillHolidayColor,
   isShowWeekDays,
   holidays,
   startOfWeek = WeekStart.Monday,
-}: IMonth) => {
+}: IDays) => {
   const renderDays = () => {
     return days.map((day, index) => {
       const isDisabled = day.getMonth() === currentDate.getMonth();
@@ -65,9 +65,9 @@ const MonthGrid = ({
   return (
     <>
       <Weekdays startOfWeek={startOfWeek} />
-      <DaysGrid>{renderDays()}</DaysGrid>
+      <DaysGridContainer>{renderDays()}</DaysGridContainer>
     </>
   );
 };
 
-export default memo(MonthGrid);
+export default memo(DaysGrid);

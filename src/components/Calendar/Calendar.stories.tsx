@@ -40,6 +40,14 @@ export const YaersTypeCalendar: Story = {
   },
 };
 
+export const WeeksTypeCalendar: Story = {
+  args: {
+    ...Basic.args,
+    label: 'WeeksTypeCalendar',
+    type: CalendarTypes.Week,
+  },
+};
+
 export const StartWeekOnSunday: Story = {
   args: {
     ...Basic.args,

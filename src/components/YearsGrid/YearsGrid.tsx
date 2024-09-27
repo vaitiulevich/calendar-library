@@ -3,7 +3,7 @@ import { MonthTitle, YearButton, YearsGridWrapper } from './styled';
 import { months } from '@constants/constants';
 import { WeekStart } from '@services/CalendarEnums';
 import { useCalendar } from '@utils/useCalendar';
-import MonthGrid from '@components/MonthGrid/MonthGrid';
+import DaysGrid from '@components/DaysGrid/DaysGrid';
 
 interface YearsGridProps {
   today: Date;
@@ -21,13 +21,11 @@ const YearsGrid: React.FC<YearsGridProps> = ({
   const renderYears = () => {
     return months.map((month, index) => {
       const thisMonthDate = new Date(currentYear, index, 1);
-      // console.log(thisMonthDate);
-
       const { days } = useCalendar(thisMonthDate, WeekStart.Monday);
       return (
         <YearButton key={month}>
           <MonthTitle>{month}</MonthTitle>
-          <MonthGrid
+          <DaysGrid
             currentDate={thisMonthDate}
             fillTodayColor={fillTodayColor}
             fillHolidayColor={fillHolidayColor}
