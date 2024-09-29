@@ -48,6 +48,17 @@ const NavigationWeeks: React.FC<NavigationYearsProps> = ({
     }
   };
 
+  const month = currentDate.getMonth();
+  const year = currentDate.getFullYear();
+
+  const isFirstMonth = month === 0;
+  const isLastMonth = month === 11;
+
+  const isPrevWeekDisabled =
+    year === rangeYears[0] && isFirstMonth && weekOffset === 0;
+  const isNextWeekDisabled =
+    weekOffset + 1 >= weeks.length && year === rangeYears[1] && isLastMonth;
+
   const currentMonthTitle = currentDate.toLocaleDateString('en-US', {
     month: 'short',
     year: 'numeric',
@@ -55,11 +66,11 @@ const NavigationWeeks: React.FC<NavigationYearsProps> = ({
 
   return (
     <NavigationWeek>
-      <NavigationButton onClick={prevWeek}>
+      <NavigationButton disabled={isPrevWeekDisabled} onClick={prevWeek}>
         <img src={images.prevMonth} alt="prev" />
       </NavigationButton>
       <div>{`(${weekOffset + 1} week) ${currentMonthTitle}`}</div>
-      <NavigationButton onClick={nextWeek}>
+      <NavigationButton disabled={isNextWeekDisabled} onClick={nextWeek}>
         <img src={images.nextMonth} alt="next" />
       </NavigationButton>
     </NavigationWeek>

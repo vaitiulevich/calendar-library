@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { MonthTitle, YearButton, YearsGridWrapper } from './styled';
 import { months } from '@constants/constants';
 import { WeekStart } from '@services/CalendarEnums';
@@ -18,20 +18,32 @@ const YearsGrid: React.FC<YearsGridProps> = ({
   fillHolidayColor,
   fillTodayColor,
 }) => {
+  const [daysByMonth, setDaysByMonth] = useState<Date[][]>([]);
+
+  useEffect(() => {
+    const newDaysByMonth = months.map((_, index) => {
+      const thisMonthDate = new Date(currentYear, index, 1);
+      // const { days } = useCalendar(thisMonthDate, WeekStart.Monday);
+      // return days;
+    });
+    // setDaysByMonth(newDaysByMonth);
+  }, [currentYear]);
   const renderYears = () => {
+    console.log('ss', daysByMonth);
     return months.map((month, index) => {
       const thisMonthDate = new Date(currentYear, index, 1);
-      const { days } = useCalendar(thisMonthDate, WeekStart.Monday);
       return (
         <YearButton key={month}>
           <MonthTitle>{month}</MonthTitle>
-          <DaysGrid
-            currentDate={thisMonthDate}
-            fillTodayColor={fillTodayColor}
-            fillHolidayColor={fillHolidayColor}
-            today={today}
-            days={days}
-          />
+          {daysByMonth.length > 0 && (
+            <DaysGrid
+              currentDate={thisMonthDate}
+              fillTodayColor={fillTodayColor}
+              fillHolidayColor={fillHolidayColor}
+              today={today}
+              days={daysByMonth[index]}
+            />
+          )}
         </YearButton>
       );
     });

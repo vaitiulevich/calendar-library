@@ -65,6 +65,8 @@ const CalendarGrid = ({
       return (
         <DaysGrid
           days={weeks || days}
+          minDate={minDate}
+          maxDate={maxDate}
           currentDate={currentDate}
           today={today}
         />

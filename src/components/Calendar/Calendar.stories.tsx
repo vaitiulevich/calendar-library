@@ -18,8 +18,8 @@ type Story = StoryObj<typeof Calendar>;
 export const Basic: Story = {
   args: {
     label: 'Basic',
-    maxDate: new Date('01.09.2024'),
-    minDate: new Date('01.10.2024'),
+    maxDate: new Date(2026, 8, 17),
+    minDate: new Date(2024, 8, 12),
     isShowWeekDays: false,
   },
 };

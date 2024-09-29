@@ -12,7 +12,7 @@ export const useCalendar = (
   const [currentDate, setCurrentDate] = useState(initialDate);
   const [weekOffset, setWeekOffset] = useState(() => {
     const today = new Date();
-    return Math.floor(today.getDate() / 7) + 1;
+    return Math.floor(today.getDate() / 7);
   });
 
   const updateDaysForMonth = useCallback(

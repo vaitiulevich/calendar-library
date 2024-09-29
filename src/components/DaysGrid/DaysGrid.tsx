@@ -33,8 +33,8 @@ const DaysGrid = ({
   days,
   currentDate,
   today,
-  minDate,
-  maxDate,
+  minDate = new Date(2024, 8, 10),
+  maxDate = new Date(2024, 8, 20),
   fillTodayColor = '#007bff',
   fillHolidayColor,
   isShowWeekDays,
@@ -43,7 +43,12 @@ const DaysGrid = ({
 }: IDays) => {
   const renderDays = () => {
     return days.map((day, index) => {
-      const isDisabled = day.getMonth() === currentDate.getMonth();
+      const isCurrentMontDay = day.getMonth() === currentDate.getMonth();
+      const isDisabled =
+        !isCurrentMontDay ||
+        day.getFullYear() !== currentDate.getFullYear() ||
+        (minDate && day.getTime() < minDate.getTime()) ||
+        (maxDate && day.getTime() > maxDate.getTime());
       const isHolidayDate = isHoliday(day, holidays);
       const isWeekDay = (isShowWeekDays && isWeekday(day)) ?? false;
       const isToday = day.toDateString() === today.toDateString();
@@ -55,7 +60,8 @@ const DaysGrid = ({
           isholiday={isHolidayDate}
           filltoday={fillTodayColor}
           fillholiday={fillHolidayColor}
-          isdisabled={isDisabled}
+          ismothday={isCurrentMontDay}
+          disabled={isDisabled}
         >
           {day.getDate()}
         </DayButton>

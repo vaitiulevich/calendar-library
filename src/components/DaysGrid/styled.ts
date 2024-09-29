@@ -1,22 +1,21 @@
 import styled from 'styled-components';
+const colors = {
+  disabledToday: '#fff',
+  disabledWeekday: '#ff0000',
+  disabledDefault: '#333',
+  enabled: '#AAAAAA',
+};
 
 const getColor = ({
-  isdisabled,
+  ismothday,
   istoday,
   isweekday,
 }: {
-  isdisabled: boolean;
+  ismothday: boolean;
   istoday: boolean;
   isweekday: boolean;
 }) => {
-  const colors = {
-    disabledToday: '#fff',
-    disabledWeekday: '#ff0000',
-    disabledDefault: '#333',
-    enabled: '#AAAAAA',
-  };
-
-  if (isdisabled) {
+  if (ismothday) {
     if (istoday) {
       return colors.disabledToday;
     }
@@ -29,7 +28,7 @@ const getColor = ({
 export const DayButton = styled.button<{
   istoday: boolean;
   isselected?: boolean;
-  isdisabled: boolean;
+  ismothday: boolean;
   filltoday?: string;
   fillholiday?: string;
   isweekday: boolean;
@@ -37,8 +36,8 @@ export const DayButton = styled.button<{
 }>`
   border: none;
   background: ${({ istoday, filltoday }) => (istoday ? filltoday : 'none')};
-  color: ${({ isdisabled, istoday, isweekday }) =>
-    getColor({ isdisabled, istoday, isweekday })};
+  color: ${({ ismothday, istoday, isweekday }) =>
+    getColor({ ismothday, istoday, isweekday })};
   font-size: 14px;
   cursor: pointer;
   width: 30px;
@@ -52,6 +51,11 @@ export const DayButton = styled.button<{
     `
     border: 2px solid ${fillholiday};
   `}
+
+  &:disabled {
+    color: ${colors.enabled};
+    background: ${({ istoday, filltoday }) => (istoday ? '#eaeaea' : 'none')};
+  }
 
   &:hover {
     background-color: ${({ istoday }) => (istoday ? '#0056b3' : '#f1f1f1')};
