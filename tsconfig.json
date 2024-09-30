@@ -26,6 +26,7 @@
       "@decorators/*": ["decorators/*"],
       "@services/*": ["services/*"],
       "@types/*": ["types/*"],
+      "@store/*": ["store/*"],
       "/*": ["/*"]
     }
   },

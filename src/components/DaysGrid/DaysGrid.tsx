@@ -5,13 +5,14 @@ import { IHoliday } from '@components/Calendar/Calendar';
 import Weekdays from '@components/Weekdays/Weekdays';
 import { WeekStart } from '@services/CalendarEnums';
 import { isHoliday, isWeekday } from '@utils/CalendarDayTypes';
+import { defMaxDate, defMinDate } from '@constants/constants';
 
 interface IDays {
   days: Date[];
   currentDate: Date;
   today: Date;
-  minDate?: Date;
-  maxDate?: Date;
+  minDate?: number;
+  maxDate?: number;
   fillTodayColor?: string;
   fillHolidayColor?: string;
   isShowWeekDays?: boolean;
@@ -23,8 +24,8 @@ export interface ICalendar {
   getDaysInMonth(
     date: Date,
     startOfWeek: string,
-    minDate?: Date,
-    maxDate?: Date,
+    minDate?: number,
+    maxDate?: number,
     rangeYears?: [number, number],
   ): Date[];
 }
@@ -33,8 +34,8 @@ const DaysGrid = ({
   days,
   currentDate,
   today,
-  minDate = new Date(2024, 8, 10),
-  maxDate = new Date(2024, 8, 20),
+  minDate = defMinDate,
+  maxDate = defMaxDate,
   fillTodayColor = '#007bff',
   fillHolidayColor,
   isShowWeekDays,
@@ -47,8 +48,8 @@ const DaysGrid = ({
       const isDisabled =
         !isCurrentMontDay ||
         day.getFullYear() !== currentDate.getFullYear() ||
-        (minDate && day.getTime() < minDate.getTime()) ||
-        (maxDate && day.getTime() > maxDate.getTime());
+        day.getTime() < minDate ||
+        day.getTime() > maxDate;
       const isHolidayDate = isHoliday(day, holidays);
       const isWeekDay = (isShowWeekDays && isWeekday(day)) ?? false;
       const isToday = day.toDateString() === today.toDateString();

@@ -16,26 +16,20 @@ const NavigationYears: React.FC<NavigationYearsProps> = ({
   const isPrevYearDisabled = currentYear <= rangeYears[0];
   const isNextYearDisabled = currentYear >= rangeYears[1];
 
-  const handlePrevDecade = () => {
+  const handlePrevYear = () => {
     handleSetYear(currentYear - 1);
   };
-  const handleNextDecade = () => {
+  const handleNextYaer = () => {
     handleSetYear(currentYear + 1);
   };
 
   return (
     <DecadeHeader>
-      <NavigationButton
-        onClick={handlePrevDecade}
-        disabled={isPrevYearDisabled}
-      >
+      <NavigationButton onClick={handlePrevYear} disabled={isPrevYearDisabled}>
         <img src={images.prevYear} alt="prev" />
       </NavigationButton>
       {currentYear}
-      <NavigationButton
-        onClick={handleNextDecade}
-        disabled={isNextYearDisabled}
-      >
+      <NavigationButton onClick={handleNextYaer} disabled={isNextYearDisabled}>
         <img src={images.nextYear} alt="next" />
       </NavigationButton>
     </DecadeHeader>

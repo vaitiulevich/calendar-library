@@ -1,10 +1,11 @@
 import React from 'react';
 import { CalendarWrapper } from './styled';
-import CalendarHeader from '@components/CalendarHeader/CalendarHeader';
-import CalendarGrid from '@components/CalendarGrid/CalendarGrid';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
 import { defMaxDate, defMinDate, defRange } from '@constants/constants';
-import { useCalendar } from '@utils/useCalendar';
+import CalendarMonth from '@components/CalendarMonth/CalendarMonth';
+import { CalendarProvider } from '@store/CalendarContext';
+import CalendarWeek from '@components/CalendarWeek/CalendarWeek';
+import CalendarYaer from '@components/CalendarYaer/CalendarYaer';
 
 export interface IHoliday {
   title: string;
@@ -17,8 +18,8 @@ export interface CalendarProps {
   label: string;
   startOfWeek?: WeekStart.Sunday | WeekStart.Monday;
   rangeYears: [number, number];
-  minDate?: Date;
-  maxDate?: Date;
+  minDate?: number;
+  maxDate?: number;
   isShowWeekDays?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   holidays?: IHoliday[];
@@ -37,48 +38,54 @@ const Calendar = ({
   onClick,
   label,
 }: CalendarProps) => {
-  const today = new Date();
-
-  const {
-    currentDate,
-    days,
-    handleSetMonth,
-    handleSetYear,
-    handleSetWeek,
-    weekOffset,
-    weeks,
-  } = useCalendar(today, startOfWeek, minDate, maxDate, rangeYears);
+  const renderCalendarType = () => {
+    switch (type) {
+      case CalendarTypes.Month:
+        return (
+          <CalendarMonth
+            minDate={minDate}
+            maxDate={maxDate}
+            startOfWeek={startOfWeek}
+            isShowWeekDays={isShowWeekDays}
+            fillHolidayColor={fillHolidayColor}
+            fillTodayColor={fillTodayColor}
+            holidays={holidays}
+            rangeYears={rangeYears}
+          />
+        );
+      case CalendarTypes.Week:
+        return (
+          <CalendarWeek
+            minDate={minDate}
+            maxDate={maxDate}
+            startOfWeek={startOfWeek}
+            isShowWeekDays={isShowWeekDays}
+            fillHolidayColor={fillHolidayColor}
+            fillTodayColor={fillTodayColor}
+            holidays={holidays}
+            rangeYears={rangeYears}
+          />
+        );
+      case CalendarTypes.Yaer:
+        return (
+          <CalendarYaer
+            minDate={minDate}
+            maxDate={maxDate}
+            startOfWeek={startOfWeek}
+            isShowWeekDays={isShowWeekDays}
+            fillHolidayColor={fillHolidayColor}
+            fillTodayColor={fillTodayColor}
+            holidays={holidays}
+            rangeYears={rangeYears}
+          />
+        );
+    }
+  };
 
   return (
-    <CalendarWrapper>
-      <CalendarHeader
-        type={type}
-        currentDate={currentDate}
-        onSetMonth={handleSetMonth}
-        onSetYear={handleSetYear}
-        onSetWeek={handleSetWeek}
-        rangeYears={rangeYears}
-        today={today}
-        days={days}
-        weekOffset={weekOffset}
-        weeks={weeks}
-      />
-
-      <CalendarGrid
-        type={type}
-        days={days}
-        weeks={weeks[weekOffset]}
-        startOfWeek={startOfWeek}
-        holidays={holidays}
-        currentDate={currentDate}
-        today={today}
-        minDate={new Date(minDate)}
-        maxDate={new Date(maxDate)}
-        fillTodayColor={fillTodayColor}
-        fillHolidayColor={fillHolidayColor}
-        isShowWeekDays={isShowWeekDays}
-      />
-    </CalendarWrapper>
+    <CalendarProvider initialDate={new Date()}>
+      <CalendarWrapper>{renderCalendarType()}</CalendarWrapper>
+    </CalendarProvider>
   );
 };
 

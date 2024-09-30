@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import Calendar from './Calendar';
-import { holidays } from '@constants/constants';
+import { defMaxDate, defMinDate, holidays } from '@constants/constants';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
 
 const meta: Meta<typeof Calendar> = {
@@ -18,8 +18,8 @@ type Story = StoryObj<typeof Calendar>;
 export const Basic: Story = {
   args: {
     label: 'Basic',
-    maxDate: new Date(2026, 8, 17),
-    minDate: new Date(2024, 8, 12),
+    maxDate: defMaxDate,
+    minDate: defMinDate,
     isShowWeekDays: false,
   },
 };

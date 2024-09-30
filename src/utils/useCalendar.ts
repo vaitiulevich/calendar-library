@@ -3,6 +3,7 @@ import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
 import { getDaysInMonth } from '@utils/getDaysInMonth';
 
 export const useCalendar = (
+  type: CalendarTypes,
   initialDate: Date,
   startOfWeek: WeekStart,
   minDate?: Date,
@@ -34,6 +35,14 @@ export const useCalendar = (
     }
     return weekChunks;
   }, [days]);
+  // const weeks = useMemo(() => {
+  //   // Если тип Year, нужно будет обработать массив дней по месяцам
+  //   const weekChunks: Date[][] = [];
+  //   for (let i = 0; i < days.length; i += 7) {
+  //     weekChunks.push(days.slice(i, i + 7));
+  //   }
+  //   return weekChunks;
+  // }, [days, type]);
 
   const handleSetMonth = useCallback((selectMonth: number) => {
     setCurrentDate((prevDate) => {
