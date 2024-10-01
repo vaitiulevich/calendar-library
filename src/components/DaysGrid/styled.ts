@@ -7,15 +7,15 @@ const colors = {
 };
 
 const getColor = ({
-  ismothday,
+  ismonthday,
   istoday,
   isweekday,
 }: {
-  ismothday: boolean;
+  ismonthday: boolean;
   istoday: boolean;
   isweekday: boolean;
 }) => {
-  if (ismothday) {
+  if (ismonthday) {
     if (istoday) {
       return colors.disabledToday;
     }
@@ -28,7 +28,7 @@ const getColor = ({
 export const DayButton = styled.button<{
   istoday: boolean;
   isselected?: boolean;
-  ismothday: boolean;
+  ismonthday: boolean;
   filltoday?: string;
   fillholiday?: string;
   isweekday: boolean;
@@ -36,8 +36,8 @@ export const DayButton = styled.button<{
 }>`
   border: none;
   background: ${({ istoday, filltoday }) => (istoday ? filltoday : 'none')};
-  color: ${({ ismothday, istoday, isweekday }) =>
-    getColor({ ismothday, istoday, isweekday })};
+  color: ${({ ismonthday, istoday, isweekday }) =>
+    getColor({ ismonthday, istoday, isweekday })};
   font-size: 14px;
   cursor: pointer;
   width: 30px;

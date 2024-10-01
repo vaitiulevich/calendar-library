@@ -44,9 +44,9 @@ const DaysGrid = ({
 }: IDays) => {
   const renderDays = () => {
     return days.map((day, index) => {
-      const isCurrentMontDay = day.getMonth() === currentDate.getMonth();
+      const isCurrentMonthDay = day.getMonth() === currentDate.getMonth();
       const isDisabled =
-        !isCurrentMontDay ||
+        !isCurrentMonthDay ||
         day.getFullYear() !== currentDate.getFullYear() ||
         day.getTime() < minDate ||
         day.getTime() > maxDate;
@@ -61,7 +61,7 @@ const DaysGrid = ({
           isholiday={isHolidayDate}
           filltoday={fillTodayColor}
           fillholiday={fillHolidayColor}
-          ismothday={isCurrentMontDay}
+          ismonthday={isCurrentMonthDay}
           disabled={isDisabled}
         >
           {day.getDate()}

@@ -10,6 +10,7 @@ import {
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
 import withDatepicker from '@decorators/withDatepicker';
 import { CalendarProvider } from '@store/CalendarContext';
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 
 const meta: Meta<typeof Calendar> = {
   title: 'Calendar',
@@ -23,6 +24,25 @@ const meta: Meta<typeof Calendar> = {
 export default meta;
 type Story = StoryObj<typeof Calendar>;
 
+const Template = (args: CalendarProps) => (
+  <ErrorBoundary>
+    <CalendarProvider initialDate={new Date()}>
+      <Calendar {...args} />
+    </CalendarProvider>
+  </ErrorBoundary>
+);
+
+const TemplateWithInput = (args: CalendarProps) => {
+  const CalendarWithInput = withDatepicker(Calendar);
+  return (
+    <ErrorBoundary>
+      <CalendarProvider initialDate={new Date()}>
+        <CalendarWithInput {...args} />
+      </CalendarProvider>
+    </ErrorBoundary>
+  );
+};
+
 export const Basic: Story = {
   args: {
     label: 'Basic',
@@ -31,22 +51,11 @@ export const Basic: Story = {
     rangeYears: defRange,
     isShowWeekDays: false,
   },
-  render: (args) => (
-    <CalendarProvider initialDate={new Date()}>
-      <Calendar {...args} />
-    </CalendarProvider>
-  ),
+  render: Template,
 };
 
 export const CalendarWithDateInput: Story = {
-  render: (args: CalendarProps) => {
-    const CalendarWithInput = withDatepicker(Calendar);
-    return (
-      <CalendarProvider initialDate={new Date()}>
-        <CalendarWithInput {...args} />
-      </CalendarProvider>
-    );
-  },
+  render: TemplateWithInput,
 };
 
 export const CalendarWithWeekdays: Story = {
@@ -55,19 +64,16 @@ export const CalendarWithWeekdays: Story = {
     label: 'CalendarWithWeekdays',
     isShowWeekDays: true,
   },
+  render: Template,
 };
 
-export const YaersTypeCalendar: Story = {
+export const YearsTypeCalendar: Story = {
   args: {
     ...Basic.args,
-    label: 'YaersTypeCalendar',
+    label: 'YearsTypeCalendar',
     type: CalendarTypes.Yaer,
   },
-  render: (args) => (
-    <CalendarProvider initialDate={new Date()}>
-      <Calendar {...args} />
-    </CalendarProvider>
-  ),
+  render: Template,
 };
 
 export const WeeksTypeCalendar: Story = {
@@ -76,11 +82,7 @@ export const WeeksTypeCalendar: Story = {
     label: 'WeeksTypeCalendar',
     type: CalendarTypes.Week,
   },
-  render: (args) => (
-    <CalendarProvider initialDate={new Date()}>
-      <Calendar {...args} />
-    </CalendarProvider>
-  ),
+  render: Template,
 };
 
 export const StartWeekOnSunday: Story = {
@@ -89,6 +91,7 @@ export const StartWeekOnSunday: Story = {
     label: 'StartWeekOnSunday',
     startOfWeek: WeekStart.Sunday,
   },
+  render: Template,
 };
 
 export const CalendarWithHolidays: Story = {
@@ -98,4 +101,5 @@ export const CalendarWithHolidays: Story = {
     fillHolidayColor: '#aa6af4',
     label: 'CalendarWithHolidays',
   },
+  render: Template,
 };
