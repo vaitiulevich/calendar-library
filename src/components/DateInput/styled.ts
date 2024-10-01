@@ -18,13 +18,13 @@ export const InputContainer = styled.div`
 export const StyledInput = styled.input`
   width: 100%;
   font-size: 1rem;
-  padding: 0.2rem;
-  padding-bottom: 0;
+  padding: 0 0.4rem;
   border: none;
   outline: none;
 `;
 
 export const ClearButton = styled.button`
+  padding: 0;
   background: transparent;
   display: flex;
   align-items: center;

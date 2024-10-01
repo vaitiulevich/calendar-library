@@ -63,6 +63,11 @@ export const YaersTypeCalendar: Story = {
     label: 'YaersTypeCalendar',
     type: CalendarTypes.Yaer,
   },
+  render: (args) => (
+    <CalendarProvider initialDate={new Date()}>
+      <Calendar {...args} />
+    </CalendarProvider>
+  ),
 };
 
 export const WeeksTypeCalendar: Story = {
@@ -71,6 +76,11 @@ export const WeeksTypeCalendar: Story = {
     label: 'WeeksTypeCalendar',
     type: CalendarTypes.Week,
   },
+  render: (args) => (
+    <CalendarProvider initialDate={new Date()}>
+      <Calendar {...args} />
+    </CalendarProvider>
+  ),
 };
 
 export const StartWeekOnSunday: Story = {

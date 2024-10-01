@@ -7,7 +7,7 @@ import { WeekStart } from '@services/CalendarEnums';
 
 export const getDaysInMonth = (
   date: Date,
-  startOfWeek: WeekStart,
+  startOfWeek: string,
   rangeYears?: [number, number],
 ): Date[] => {
   const days: Date[] = [];

@@ -7,6 +7,7 @@ import { defRange } from '@constants/constants';
 import { useCalendarContext } from '@store/CalendarContext';
 import { getDaysInMonth } from '@utils/getDaysInMonth';
 import NavigationWeek from '@components/NavigationWeek/NavigationWeek';
+import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
 
 interface CalendarMonthProps {
   minDate?: number;
@@ -31,21 +32,16 @@ const CalendarMonth = ({
 }: CalendarMonthProps) => {
   const { currentDate, today, handleSetMonth } = useCalendarContext();
 
-  const updateDaysForMonth = useCallback(
-    (date: Date) => {
-      return getDaysInMonth(date, WeekStart.Monday, rangeYears);
-    },
-    [startOfWeek, rangeYears],
-  );
-
   const [weekOffset, setWeekOffset] = useState(() => {
     const today = new Date();
-    return Math.ceil(today.getDate() / 7);
+    return Math.floor(today.getDate() / 7);
   });
 
-  const days = useMemo(
-    () => updateDaysForMonth(currentDate),
-    [currentDate, handleSetMonth],
+  const days = useUpdateDaysForMonth(
+    rangeYears,
+    startOfWeek,
+    null,
+    currentDate,
   );
 
   const handleSetWeek = useCallback((week: number) => {
@@ -61,27 +57,29 @@ const CalendarMonth = ({
   }, [days]);
 
   return (
-    <>
-      <NavigationWeek
-        currentDate={currentDate}
-        rangeYears={rangeYears}
-        handleSetMonth={handleSetMonth}
-        handleSetWeek={handleSetWeek}
-        weekOffset={weekOffset}
-        weeks={weeks}
-      />
-      <DaysGrid
-        days={weeks[weekOffset]}
-        minDate={minDate}
-        maxDate={maxDate}
-        currentDate={currentDate}
-        today={today}
-        fillHolidayColor={fillHolidayColor}
-        fillTodayColor={fillTodayColor}
-        holidays={holidays}
-        isShowWeekDays={isShowWeekDays}
-      />
-    </>
+    weeks.length > 0 && (
+      <>
+        <NavigationWeek
+          currentDate={currentDate}
+          rangeYears={rangeYears}
+          handleSetMonth={handleSetMonth}
+          handleSetWeek={handleSetWeek}
+          weekOffset={weekOffset}
+          weeks={weeks}
+        />
+        <DaysGrid
+          days={weeks[weekOffset]}
+          minDate={minDate}
+          maxDate={maxDate}
+          currentDate={currentDate}
+          today={today}
+          fillHolidayColor={fillHolidayColor}
+          fillTodayColor={fillTodayColor}
+          holidays={holidays}
+          isShowWeekDays={isShowWeekDays}
+        />
+      </>
+    )
   );
 };
 

@@ -7,6 +7,7 @@ import Navigation from '@components/Navigation/Navigation';
 import { defRange } from '@constants/constants';
 import { useCalendarContext } from '@store/CalendarContext';
 import { getDaysInMonth } from '@utils/getDaysInMonth';
+import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
 
 export interface CalendarMonthProps {
   minDate?: number;
@@ -31,16 +32,12 @@ const CalendarMonth = ({
 }: CalendarMonthProps) => {
   const { currentDate, today, handleSetMonth, handleSetYear } =
     useCalendarContext();
-
-  const updateDaysForMonth = useCallback(
-    (date: Date) => {
-      return getDaysInMonth(date, WeekStart.Monday, rangeYears);
-    },
-    [startOfWeek, rangeYears],
+  const days = useUpdateDaysForMonth(
+    rangeYears,
+    startOfWeek,
+    null,
+    currentDate,
   );
-
-  const days = useMemo(() => updateDaysForMonth(currentDate), [currentDate]);
-
   return (
     <>
       <Navigation
