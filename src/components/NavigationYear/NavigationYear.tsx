@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { DecadeHeader, NavigationButton } from './styled';
 import { images } from '@constants/images';
 
@@ -13,30 +13,27 @@ const NavigationYears: React.FC<NavigationYearsProps> = ({
   handleSetYear,
   rangeYears,
 }) => {
-  const handlePrevDecade = () => {
+  const isPrevYearDisabled = currentYear <= rangeYears[0];
+  const isNextYearDisabled = currentYear >= rangeYears[1];
+
+  const handlePrevYear = () => {
     handleSetYear(currentYear - 1);
   };
-  const handleNextDecade = () => {
+  const handleNextYaer = () => {
     handleSetYear(currentYear + 1);
   };
 
   return (
     <DecadeHeader>
-      <NavigationButton
-        onClick={handlePrevDecade}
-        disabled={currentYear <= rangeYears[0]}
-      >
+      <NavigationButton onClick={handlePrevYear} disabled={isPrevYearDisabled}>
         <img src={images.prevYear} alt="prev" />
       </NavigationButton>
       {currentYear}
-      <NavigationButton
-        onClick={handleNextDecade}
-        disabled={currentYear >= rangeYears[1]}
-      >
+      <NavigationButton onClick={handleNextYaer} disabled={isNextYearDisabled}>
         <img src={images.nextYear} alt="next" />
       </NavigationButton>
     </DecadeHeader>
   );
 };
 
-export default NavigationYears;
+export default memo(NavigationYears);

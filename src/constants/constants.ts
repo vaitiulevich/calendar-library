@@ -35,10 +35,10 @@ export const months = [
   'December',
 ];
 
-export const defMinDate = new Date(
-  new Date().setFullYear(new Date().getFullYear() - 1),
-);
-export const defMaxDate = new Date(
-  new Date().setFullYear(new Date().getFullYear() + 1),
-);
-export const defRange: [number, number] = [2013, 2064];
+export const defMinDate = new Date(2023, 0, 1).getTime();
+export const defMaxDate = new Date(2024, 11, 1).getTime();
+export const defRange: [number, number] = [2023, 2024];
+
+export const FIRST_DAY_OFFSET = 2;
+export const DAYS_IN_A_WEEK = 7;
+export const AVAILABLE_NUMBER_DAYS = 5;

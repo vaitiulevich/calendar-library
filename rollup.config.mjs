@@ -37,6 +37,7 @@ export default [
             replacement: path.resolve(__dirname, 'src/components'),
           },
           { find: '@icons', replacement: path.resolve(__dirname, 'src/icons') },
+          { find: '@utils', replacement: path.resolve(__dirname, 'src/utils') },
           {
             find: '@constants',
             replacement: path.resolve(__dirname, 'src/constants'),
@@ -48,6 +49,10 @@ export default [
           {
             find: '@services',
             replacement: path.resolve(__dirname, 'src/services'),
+          },
+          {
+            find: '@store',
+            replacement: path.resolve(__dirname, 'src/store'),
           },
           {
             find: '@types',

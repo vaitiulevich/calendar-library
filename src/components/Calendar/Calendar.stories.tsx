@@ -1,8 +1,15 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import Calendar from './Calendar';
-import { holidays } from '@constants/constants';
+import Calendar, { CalendarProps } from './Calendar';
+import {
+  defMaxDate,
+  defMinDate,
+  defRange,
+  holidays,
+} from '@constants/constants';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
+import withDatepicker from '@decorators/withDatepicker';
+import { CalendarProvider } from '@store/CalendarContext';
 
 const meta: Meta<typeof Calendar> = {
   title: 'Calendar',
@@ -19,9 +26,26 @@ type Story = StoryObj<typeof Calendar>;
 export const Basic: Story = {
   args: {
     label: 'Basic',
-    maxDate: new Date('01.09.2024'),
-    minDate: new Date('01.10.2024'),
+    maxDate: defMaxDate,
+    minDate: defMinDate,
+    rangeYears: defRange,
     isShowWeekDays: false,
+  },
+  render: (args) => (
+    <CalendarProvider initialDate={new Date()}>
+      <Calendar {...args} />
+    </CalendarProvider>
+  ),
+};
+
+export const CalendarWithDateInput: Story = {
+  render: (args: CalendarProps) => {
+    const CalendarWithInput = withDatepicker(Calendar);
+    return (
+      <CalendarProvider initialDate={new Date()}>
+        <CalendarWithInput {...args} />
+      </CalendarProvider>
+    );
   },
 };
 
@@ -38,6 +62,14 @@ export const YaersTypeCalendar: Story = {
     ...Basic.args,
     label: 'YaersTypeCalendar',
     type: CalendarTypes.Yaer,
+  },
+};
+
+export const WeeksTypeCalendar: Story = {
+  args: {
+    ...Basic.args,
+    label: 'WeeksTypeCalendar',
+    type: CalendarTypes.Week,
   },
 };
 

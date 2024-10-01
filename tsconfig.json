@@ -21,10 +21,12 @@
     "paths": {
       "@components/*": ["components/*"],
       "@icons/*": ["icons/*"],
+      "@utils/*": ["utils/*"],
       "@constants/*": ["constants/*"],
       "@decorators/*": ["decorators/*"],
       "@services/*": ["services/*"],
       "@types/*": ["types/*"],
+      "@store/*": ["store/*"],
       "/*": ["/*"]
     }
   },
