@@ -1,7 +1,15 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import Calendar from './Calendar';
-import { defMaxDate, defMinDate, holidays } from '@constants/constants';
+import Calendar, { CalendarProps } from './Calendar';
+import {
+  defMaxDate,
+  defMinDate,
+  defRange,
+  holidays,
+} from '@constants/constants';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
+import withDatepicker from '@decorators/withDatepicker';
+import { CalendarProvider } from '@store/CalendarContext';
 
 const meta: Meta<typeof Calendar> = {
   title: 'Calendar',
@@ -20,7 +28,24 @@ export const Basic: Story = {
     label: 'Basic',
     maxDate: defMaxDate,
     minDate: defMinDate,
+    rangeYears: defRange,
     isShowWeekDays: false,
+  },
+  render: (args) => (
+    <CalendarProvider initialDate={new Date()}>
+      <Calendar {...args} />
+    </CalendarProvider>
+  ),
+};
+
+export const CalendarWithDateInput: Story = {
+  render: (args: CalendarProps) => {
+    const CalendarWithInput = withDatepicker(Calendar);
+    return (
+      <CalendarProvider initialDate={new Date()}>
+        <CalendarWithInput {...args} />
+      </CalendarProvider>
+    );
   },
 };
 

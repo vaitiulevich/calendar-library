@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import React from 'react';
 import { DayButton, DaysGridContainer } from './styled';
 import { IHoliday } from '@components/Calendar/Calendar';

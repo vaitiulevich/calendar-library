@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
 import React from 'react';
 import { IHoliday } from '@components/Calendar/Calendar';
 import { WeekStart } from '@services/CalendarEnums';
@@ -8,7 +8,7 @@ import { defRange } from '@constants/constants';
 import { useCalendarContext } from '@store/CalendarContext';
 import { getDaysInMonth } from '@utils/getDaysInMonth';
 
-interface CalendarMonthProps {
+export interface CalendarMonthProps {
   minDate?: number;
   maxDate?: number;
   fillTodayColor?: string;
@@ -39,10 +39,8 @@ const CalendarMonth = ({
     [startOfWeek, rangeYears],
   );
 
-  const days = useMemo(
-    () => updateDaysForMonth(currentDate),
-    [currentDate, updateDaysForMonth],
-  );
+  const days = useMemo(() => updateDaysForMonth(currentDate), [currentDate]);
+
   return (
     <>
       <Navigation

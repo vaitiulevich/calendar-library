@@ -83,9 +83,9 @@ const Calendar = ({
   };
 
   return (
-    <CalendarProvider initialDate={new Date()}>
-      <CalendarWrapper>{renderCalendarType()}</CalendarWrapper>
-    </CalendarProvider>
+    // <CalendarProvider initialDate={new Date()}>
+    <CalendarWrapper>{renderCalendarType()}</CalendarWrapper>
+    // </CalendarProvider>
   );
 };
 
