@@ -42,3 +42,10 @@ export const defRange: [number, number] = [2023, 2024];
 export const FIRST_DAY_OFFSET = 2;
 export const DAYS_IN_A_WEEK = 7;
 export const AVAILABLE_NUMBER_DAYS = 5;
+
+export const countMonths = 12;
+export const maxYearLength = 4;
+
+export const maxLengthTask = 40;
+
+export const titleTaskStorage = 'tasks';

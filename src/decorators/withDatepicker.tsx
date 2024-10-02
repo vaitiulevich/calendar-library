@@ -22,7 +22,6 @@ const withDatepicker = (
     return (
       <>
         <EnhancedDateInput
-          value={''}
           handleSelectDate={handleSelectDate}
           rangeYears={props.rangeYears}
         />

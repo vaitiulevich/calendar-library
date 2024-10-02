@@ -8,6 +8,7 @@ import { defRange } from '@constants/constants';
 import { useCalendarContext } from '@store/CalendarContext';
 import { getDaysInMonth } from '@utils/getDaysInMonth';
 import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
+import { useToDoContext } from '@store/ToDoContext';
 
 export interface CalendarMonthProps {
   minDate?: number;
@@ -18,6 +19,9 @@ export interface CalendarMonthProps {
   holidays?: IHoliday[];
   startOfWeek?: string;
   rangeYears?: [number, number];
+  handleDayClick?: (day: Date) => void;
+  selectedDay?: Date | null;
+  tasks?: { [key: string]: string[] };
 }
 
 const CalendarMonth = ({
@@ -29,6 +33,9 @@ const CalendarMonth = ({
   holidays,
   startOfWeek = WeekStart.Monday,
   rangeYears = defRange,
+  handleDayClick,
+  selectedDay,
+  tasks,
 }: CalendarMonthProps) => {
   const { currentDate, today, handleSetMonth, handleSetYear } =
     useCalendarContext();
@@ -48,15 +55,18 @@ const CalendarMonth = ({
       />
       <DaysGrid
         days={days}
+        tasks={tasks}
         startOfWeek={startOfWeek}
         holidays={holidays}
         currentDate={currentDate}
+        handleDayClick={handleDayClick}
         today={today}
         minDate={minDate}
         maxDate={maxDate}
         fillTodayColor={fillTodayColor}
         fillHolidayColor={fillHolidayColor}
         isShowWeekDays={isShowWeekDays}
+        selectedDay={selectedDay}
       />
     </>
   );

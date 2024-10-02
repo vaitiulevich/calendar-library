@@ -4,7 +4,6 @@ import React from 'react';
 
 interface WithYearRangeProps {
   rangeYears: [number, number];
-  value: string;
   handleSelectDate: (date: Date) => void;
 }
 
