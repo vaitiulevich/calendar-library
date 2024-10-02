@@ -1,22 +1,21 @@
 import styled from 'styled-components';
+const colors = {
+  disabledToday: '#fff',
+  disabledWeekday: '#ff0000',
+  disabledDefault: '#333',
+  enabled: '#AAAAAA',
+};
 
 const getColor = ({
-  isdisabled,
+  ismonthday,
   istoday,
   isweekday,
 }: {
-  isdisabled: boolean;
+  ismonthday: boolean;
   istoday: boolean;
   isweekday: boolean;
 }) => {
-  const colors = {
-    disabledToday: '#fff',
-    disabledWeekday: '#ff0000',
-    disabledDefault: '#333',
-    enabled: '#AAAAAA',
-  };
-
-  if (isdisabled) {
+  if (ismonthday) {
     if (istoday) {
       return colors.disabledToday;
     }
@@ -29,7 +28,7 @@ const getColor = ({
 export const DayButton = styled.button<{
   istoday: boolean;
   isselected?: boolean;
-  isdisabled: boolean;
+  ismonthday: boolean;
   filltoday?: string;
   fillholiday?: string;
   isweekday: boolean;
@@ -37,8 +36,8 @@ export const DayButton = styled.button<{
 }>`
   border: none;
   background: ${({ istoday, filltoday }) => (istoday ? filltoday : 'none')};
-  color: ${({ isdisabled, istoday, isweekday }) =>
-    getColor({ isdisabled, istoday, isweekday })};
+  color: ${({ ismonthday, istoday, isweekday }) =>
+    getColor({ ismonthday, istoday, isweekday })};
   font-size: 14px;
   cursor: pointer;
   width: 30px;
@@ -53,12 +52,17 @@ export const DayButton = styled.button<{
     border: 2px solid ${fillholiday};
   `}
 
+  &:disabled {
+    color: ${colors.enabled};
+    background: ${({ istoday, filltoday }) => (istoday ? '#eaeaea' : 'none')};
+  }
+
   &:hover {
     background-color: ${({ istoday }) => (istoday ? '#0056b3' : '#f1f1f1')};
   }
 `;
 
-export const DaysGrid = styled.div`
+export const DaysGridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   gap: 2px;

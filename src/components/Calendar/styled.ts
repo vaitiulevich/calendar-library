@@ -5,6 +5,5 @@ export const CalendarWrapper = styled.div`
   border-radius: 8px;
   padding: 5px;
   font-family: 'Open Sans', sans-serif;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   text-align: center;
 `;

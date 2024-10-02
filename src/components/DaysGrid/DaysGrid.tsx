@@ -1,17 +1,18 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import React from 'react';
-import { DayButton, DaysGrid } from './styled';
+import { DayButton, DaysGridContainer } from './styled';
 import { IHoliday } from '@components/Calendar/Calendar';
 import Weekdays from '@components/Weekdays/Weekdays';
 import { WeekStart } from '@services/CalendarEnums';
 import { isHoliday, isWeekday } from '@utils/CalendarDayTypes';
+import { defMaxDate, defMinDate } from '@constants/constants';
 
-interface IMonth {
+interface IDays {
   days: Date[];
   currentDate: Date;
   today: Date;
-  minDate?: Date;
-  maxDate?: Date;
+  minDate?: number;
+  maxDate?: number;
   fillTodayColor?: string;
   fillHolidayColor?: string;
   isShowWeekDays?: boolean;
@@ -23,27 +24,32 @@ export interface ICalendar {
   getDaysInMonth(
     date: Date,
     startOfWeek: string,
-    minDate?: Date,
-    maxDate?: Date,
+    minDate?: number,
+    maxDate?: number,
     rangeYears?: [number, number],
   ): Date[];
 }
 
-const MonthGrid = ({
+const DaysGrid = ({
   days,
   currentDate,
   today,
-  minDate,
-  maxDate,
-  fillTodayColor,
+  minDate = defMinDate,
+  maxDate = defMaxDate,
+  fillTodayColor = '#007bff',
   fillHolidayColor,
   isShowWeekDays,
   holidays,
   startOfWeek = WeekStart.Monday,
-}: IMonth) => {
+}: IDays) => {
   const renderDays = () => {
     return days.map((day, index) => {
-      const isDisabled = day.getMonth() === currentDate.getMonth();
+      const isCurrentMonthDay = day.getMonth() === currentDate.getMonth();
+      const isDisabled =
+        !isCurrentMonthDay ||
+        day.getFullYear() !== currentDate.getFullYear() ||
+        day.getTime() < minDate ||
+        day.getTime() > maxDate;
       const isHolidayDate = isHoliday(day, holidays);
       const isWeekDay = (isShowWeekDays && isWeekday(day)) ?? false;
       const isToday = day.toDateString() === today.toDateString();
@@ -55,7 +61,8 @@ const MonthGrid = ({
           isholiday={isHolidayDate}
           filltoday={fillTodayColor}
           fillholiday={fillHolidayColor}
-          isdisabled={isDisabled}
+          ismonthday={isCurrentMonthDay}
+          disabled={isDisabled}
         >
           {day.getDate()}
         </DayButton>
@@ -65,9 +72,9 @@ const MonthGrid = ({
   return (
     <>
       <Weekdays startOfWeek={startOfWeek} />
-      <DaysGrid>{renderDays()}</DaysGrid>
+      <DaysGridContainer>{renderDays()}</DaysGridContainer>
     </>
   );
 };
 
-export default memo(MonthGrid);
+export default memo(DaysGrid);
