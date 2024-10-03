@@ -13,13 +13,13 @@ import { CalendarProvider } from '@store/CalendarContext';
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 import { ToDoListProvider } from '@store/ToDoContext';
 import withToDoList from '@decorators/withToDoList';
+import withDateRangePicker from '@decorators/withDateRange/withDateRangePicker';
 
 const meta: Meta<typeof Calendar> = {
   title: 'Calendar',
   component: Calendar,
   argTypes: {
     fillTodayColor: { control: 'color' },
-    onClick: { action: 'clicked' },
   },
 };
 
@@ -58,15 +58,33 @@ const TemplateWithTodoList = (args: CalendarProps) => {
   );
 };
 
+const TemplateWithRangePicker = (args: CalendarProps) => {
+  const CalendarWithRangePicker = withDateRangePicker(Calendar);
+  return (
+    <ErrorBoundary>
+      <CalendarProvider initialDate={new Date()}>
+        <CalendarWithRangePicker {...args} />
+      </CalendarProvider>
+    </ErrorBoundary>
+  );
+};
+
 export const Basic: Story = {
   args: {
-    label: 'Basic',
     maxDate: defMaxDate,
     minDate: defMinDate,
     rangeYears: defRange,
     isShowWeekDays: false,
   },
   render: Template,
+};
+
+export const CalendarWithRangePicker: Story = {
+  args: {
+    maxDate: defMaxDate,
+    minDate: defMinDate,
+  },
+  render: TemplateWithRangePicker,
 };
 
 export const CalendarWithTodoList: Story = {
@@ -80,7 +98,6 @@ export const CalendarWithDatepicker: Story = {
 export const CalendarWithWeekdays: Story = {
   args: {
     ...Basic.args,
-    label: 'CalendarWithWeekdays',
     isShowWeekDays: true,
   },
   render: Template,
@@ -89,7 +106,6 @@ export const CalendarWithWeekdays: Story = {
 export const YearsTypeCalendar: Story = {
   args: {
     ...Basic.args,
-    label: 'YearsTypeCalendar',
     type: CalendarTypes.Yaer,
   },
   render: Template,
@@ -98,7 +114,6 @@ export const YearsTypeCalendar: Story = {
 export const WeeksTypeCalendar: Story = {
   args: {
     ...Basic.args,
-    label: 'WeeksTypeCalendar',
     type: CalendarTypes.Week,
   },
   render: Template,
@@ -107,7 +122,6 @@ export const WeeksTypeCalendar: Story = {
 export const StartWeekOnSunday: Story = {
   args: {
     ...Basic.args,
-    label: 'StartWeekOnSunday',
     startOfWeek: WeekStart.Sunday,
   },
   render: Template,
@@ -118,7 +132,6 @@ export const CalendarWithHolidays: Story = {
     ...Basic.args,
     holidays: holidays,
     fillHolidayColor: '#aa6af4',
-    label: 'CalendarWithHolidays',
   },
   render: Template,
 };

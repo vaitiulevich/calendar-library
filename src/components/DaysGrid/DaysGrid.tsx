@@ -4,7 +4,7 @@ import { DayButton, DaysGridContainer, TaskIndicator } from './styled';
 import { IHoliday } from '@components/Calendar/Calendar';
 import Weekdays from '@components/Weekdays/Weekdays';
 import { WeekStart } from '@services/CalendarEnums';
-import { isHoliday, isWeekday } from '@utils/CalendarDayTypes';
+import { isDateEqual, isHoliday, isWeekday } from '@utils/CalendarDayTypes';
 import { defMaxDate, defMinDate } from '@constants/constants';
 
 interface IDays {
@@ -21,6 +21,9 @@ interface IDays {
   handleDayClick?: (date: Date) => void;
   selectedDay?: Date | null;
   tasks?: { [key: string]: string[] };
+  isInRange?: (date: string) => boolean;
+  startDate?: Date;
+  endDate?: Date;
 }
 
 const DaysGrid = ({
@@ -37,6 +40,9 @@ const DaysGrid = ({
   handleDayClick,
   selectedDay,
   tasks,
+  isInRange,
+  startDate,
+  endDate,
 }: IDays) => {
   const renderDays = () => {
     return days.map((day, index) => {
@@ -46,24 +52,37 @@ const DaysGrid = ({
         day.getFullYear() !== currentDate.getFullYear() ||
         day.getTime() < minDate ||
         day.getTime() > maxDate;
+
       const isHolidayDate = isHoliday(day, holidays);
-      const isWeekDay = (isShowWeekDays && isWeekday(day)) ?? false;
-      const isToday = day.toDateString() === today.toDateString();
-      const isSelected = selectedDay?.toDateString() === day.toDateString();
+      const isWeekDay = isShowWeekDays && isWeekday(day);
+      const isToday = isDateEqual(day, today);
+      const isSelected = isDateEqual(day, selectedDay);
 
       const dateString = day.toDateString();
       const hasTasks = tasks ? tasks.hasOwnProperty(dateString) : false;
 
+      const isRange = isInRange ? isInRange(dateString) : false;
+      const isStartDate = isDateEqual(day, startDate);
+      const isEndDate = isDateEqual(day, endDate);
+
+      const className = [
+        'day-button',
+        isToday ? 'today' : '',
+        isWeekDay ? 'weekday' : '',
+        isHolidayDate ? 'holiday' : '',
+        isSelected ? 'selected' : '',
+        isDisabled ? 'disabled' : '',
+        isRange ? 'in-range' : '',
+        isStartDate ? 'start-range' : '',
+        isEndDate ? 'end-range' : '',
+      ].join(' ');
+
       return (
         <DayButton
           key={index}
-          istoday={isToday}
-          isweekday={isWeekDay}
-          isholiday={isHolidayDate}
+          className={className}
           filltoday={fillTodayColor}
           fillholiday={fillHolidayColor}
-          ismonthday={isCurrentMonthDay}
-          isselected={isSelected}
           disabled={isDisabled}
           onClick={() => {
             if (!isDisabled && handleDayClick) {

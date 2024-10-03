@@ -4,7 +4,7 @@ import React from 'react';
 
 interface WithYearRangeProps {
   rangeYears: [number, number];
-  handleSelectDate: (date: Date) => void;
+  handleSelectDate: (date: Date | null) => void;
 }
 
 const withYearRange = (WrappedComponent: React.FC<DateInputProps>) => {
