@@ -1,28 +1,20 @@
-import React, { useEffect, useState, useCallback, memo } from 'react';
+import React, { useState, useCallback, memo } from 'react';
 import { ClearButton, InputContainer, StyledInput } from './styled';
 import { images } from '@constants/images';
+import { countMonths, maxYearLength } from '@constants/constants';
 
 export interface DateInputProps {
-  value: string;
   handleSelectDate: (date: Date) => void;
   validateYear?: (year: string) => string;
   validateDate?: (date: Date) => boolean;
 }
 
-const countMonths = 12;
-const maxYearLength = 4;
-
 const DateInput: React.FC<DateInputProps> = ({
-  value,
   handleSelectDate,
   validateYear,
   validateDate,
 }) => {
-  const [inputValue, setInputValue] = useState(value);
-
-  useEffect(() => {
-    setInputValue(value);
-  }, [value]);
+  const [inputValue, setInputValue] = useState('');
 
   const sanitizeInput = (input: string) => input.replace(/\D/g, '');
 

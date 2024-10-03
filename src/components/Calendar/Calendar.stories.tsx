@@ -11,6 +11,8 @@ import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
 import withDatepicker from '@decorators/withDatepicker';
 import { CalendarProvider } from '@store/CalendarContext';
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
+import { ToDoListProvider } from '@store/ToDoContext';
+import withToDoList from '@decorators/withToDoList';
 
 const meta: Meta<typeof Calendar> = {
   title: 'Calendar',
@@ -32,12 +34,25 @@ const Template = (args: CalendarProps) => (
   </ErrorBoundary>
 );
 
-const TemplateWithInput = (args: CalendarProps) => {
+const TemplateWithDatepicker = (args: CalendarProps) => {
   const CalendarWithInput = withDatepicker(Calendar);
   return (
     <ErrorBoundary>
       <CalendarProvider initialDate={new Date()}>
         <CalendarWithInput {...args} />
+      </CalendarProvider>
+    </ErrorBoundary>
+  );
+};
+
+const TemplateWithTodoList = (args: CalendarProps) => {
+  const CalendarWithInput = withToDoList(Calendar);
+  return (
+    <ErrorBoundary>
+      <CalendarProvider initialDate={new Date()}>
+        <ToDoListProvider>
+          <CalendarWithInput {...args} />
+        </ToDoListProvider>
       </CalendarProvider>
     </ErrorBoundary>
   );
@@ -54,8 +69,12 @@ export const Basic: Story = {
   render: Template,
 };
 
-export const CalendarWithDateInput: Story = {
-  render: TemplateWithInput,
+export const CalendarWithTodoList: Story = {
+  render: TemplateWithTodoList,
+};
+
+export const CalendarWithDatepicker: Story = {
+  render: TemplateWithDatepicker,
 };
 
 export const CalendarWithWeekdays: Story = {

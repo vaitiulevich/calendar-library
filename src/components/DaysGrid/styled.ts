@@ -29,7 +29,7 @@ export const DayButton = styled.button<{
   istoday: boolean;
   isselected?: boolean;
   ismonthday: boolean;
-  filltoday?: string;
+  filltoday: string;
   fillholiday?: string;
   isweekday: boolean;
   isholiday?: boolean;
@@ -52,6 +52,13 @@ export const DayButton = styled.button<{
     border: 2px solid ${fillholiday};
   `}
 
+  ${({ isselected, filltoday }) =>
+    isselected &&
+    `
+    border: 0.01px solid ${filltoday};
+    box-shadow: 0 0 0.1rem ${filltoday};
+  `}
+
   &:disabled {
     color: ${colors.enabled};
     background: ${({ istoday, filltoday }) => (istoday ? '#eaeaea' : 'none')};
@@ -60,6 +67,19 @@ export const DayButton = styled.button<{
   &:hover {
     background-color: ${({ istoday }) => (istoday ? '#0056b3' : '#f1f1f1')};
   }
+`;
+
+export const TaskIndicator = styled.div<{
+  filltoday: string;
+}>`
+  width: 4px;
+  height: 4px;
+  background-color: ${({ filltoday }) => (filltoday ? filltoday : '#007bff')};
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  top: 3px;
+  transform: translateX(-50%);
 `;
 
 export const DaysGridContainer = styled.div`

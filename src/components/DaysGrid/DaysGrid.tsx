@@ -1,6 +1,6 @@
-import { memo, useEffect } from 'react';
+import { memo } from 'react';
 import React from 'react';
-import { DayButton, DaysGridContainer } from './styled';
+import { DayButton, DaysGridContainer, TaskIndicator } from './styled';
 import { IHoliday } from '@components/Calendar/Calendar';
 import Weekdays from '@components/Weekdays/Weekdays';
 import { WeekStart } from '@services/CalendarEnums';
@@ -18,16 +18,9 @@ interface IDays {
   isShowWeekDays?: boolean;
   holidays?: IHoliday[];
   startOfWeek?: string;
-}
-
-export interface ICalendar {
-  getDaysInMonth(
-    date: Date,
-    startOfWeek: string,
-    minDate?: number,
-    maxDate?: number,
-    rangeYears?: [number, number],
-  ): Date[];
+  handleDayClick?: (date: Date) => void;
+  selectedDay?: Date | null;
+  tasks?: { [key: string]: string[] };
 }
 
 const DaysGrid = ({
@@ -41,6 +34,9 @@ const DaysGrid = ({
   isShowWeekDays,
   holidays,
   startOfWeek = WeekStart.Monday,
+  handleDayClick,
+  selectedDay,
+  tasks,
 }: IDays) => {
   const renderDays = () => {
     return days.map((day, index) => {
@@ -53,6 +49,11 @@ const DaysGrid = ({
       const isHolidayDate = isHoliday(day, holidays);
       const isWeekDay = (isShowWeekDays && isWeekday(day)) ?? false;
       const isToday = day.toDateString() === today.toDateString();
+      const isSelected = selectedDay?.toDateString() === day.toDateString();
+
+      const dateString = day.toDateString();
+      const hasTasks = tasks ? tasks.hasOwnProperty(dateString) : false;
+
       return (
         <DayButton
           key={index}
@@ -62,13 +63,21 @@ const DaysGrid = ({
           filltoday={fillTodayColor}
           fillholiday={fillHolidayColor}
           ismonthday={isCurrentMonthDay}
+          isselected={isSelected}
           disabled={isDisabled}
+          onClick={() => {
+            if (!isDisabled && handleDayClick) {
+              handleDayClick(day);
+            }
+          }}
         >
           {day.getDate()}
+          {hasTasks && <TaskIndicator filltoday={fillTodayColor} />}
         </DayButton>
       );
     });
   };
+
   return (
     <>
       <Weekdays startOfWeek={startOfWeek} />

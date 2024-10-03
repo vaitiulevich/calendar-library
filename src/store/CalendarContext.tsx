@@ -11,6 +11,8 @@ interface CalendarContextType {
   handleSetMonth: (selectMonth: number) => void;
   handleSetYear: (selectYear: number) => void;
   today: Date;
+  // handleDayClick: (day: Date) => void;
+  // selectedDay: Date | null;
 }
 
 const CalendarContext = createContext<CalendarContextType | undefined>(
@@ -26,6 +28,7 @@ export const CalendarProvider: React.FC<CalendarProviderProps> = ({
   initialDate,
 }) => {
   const [currentDate, setCurrentDate] = useState(initialDate);
+  // const [selectedDay, setSelectedDay] = useState<Date | null>(null);
   const today = new Date();
 
   const handleSetMonth = useCallback((selectMonth: number) => {
@@ -38,6 +41,15 @@ export const CalendarProvider: React.FC<CalendarProviderProps> = ({
     setCurrentDate((prevDate) => new Date(selectYear, prevDate.getMonth(), 1));
   }, []);
 
+  // const handleDayClick = (day: Date) => {
+  //   console.log('date', day);
+  //   setSelectedDay(day);
+  //   // const task = prompt('Введите задачу:');
+  //   // if (task) {
+  //   //   addTask(date, task);
+  //   // }
+  // };
+
   return (
     <CalendarContext.Provider
       value={{
@@ -45,6 +57,8 @@ export const CalendarProvider: React.FC<CalendarProviderProps> = ({
         handleSetMonth,
         handleSetYear,
         today,
+        // handleDayClick,
+        // selectedDay,
       }}
     >
       {children}
