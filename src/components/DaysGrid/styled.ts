@@ -7,15 +7,15 @@ const colors = {
 };
 
 const getColor = ({
-  ismothday,
+  ismonthday,
   istoday,
   isweekday,
 }: {
-  ismothday: boolean;
+  ismonthday: boolean;
   istoday: boolean;
   isweekday: boolean;
 }) => {
-  if (ismothday) {
+  if (ismonthday) {
     if (istoday) {
       return colors.disabledToday;
     }
@@ -28,16 +28,16 @@ const getColor = ({
 export const DayButton = styled.button<{
   istoday: boolean;
   isselected?: boolean;
-  ismothday: boolean;
-  filltoday?: string;
+  ismonthday: boolean;
+  filltoday: string;
   fillholiday?: string;
   isweekday: boolean;
   isholiday?: boolean;
 }>`
   border: none;
   background: ${({ istoday, filltoday }) => (istoday ? filltoday : 'none')};
-  color: ${({ ismothday, istoday, isweekday }) =>
-    getColor({ ismothday, istoday, isweekday })};
+  color: ${({ ismonthday, istoday, isweekday }) =>
+    getColor({ ismonthday, istoday, isweekday })};
   font-size: 14px;
   cursor: pointer;
   width: 30px;
@@ -52,6 +52,13 @@ export const DayButton = styled.button<{
     border: 2px solid ${fillholiday};
   `}
 
+  ${({ isselected, filltoday }) =>
+    isselected &&
+    `
+    border: 0.01px solid ${filltoday};
+    box-shadow: 0 0 0.1rem ${filltoday};
+  `}
+
   &:disabled {
     color: ${colors.enabled};
     background: ${({ istoday, filltoday }) => (istoday ? '#eaeaea' : 'none')};
@@ -60,6 +67,19 @@ export const DayButton = styled.button<{
   &:hover {
     background-color: ${({ istoday }) => (istoday ? '#0056b3' : '#f1f1f1')};
   }
+`;
+
+export const TaskIndicator = styled.div<{
+  filltoday: string;
+}>`
+  width: 4px;
+  height: 4px;
+  background-color: ${({ filltoday }) => (filltoday ? filltoday : '#007bff')};
+  border-radius: 50%;
+  position: absolute;
+  right: 0px;
+  top: 3px;
+  transform: translateX(-50%);
 `;
 
 export const DaysGridContainer = styled.div`

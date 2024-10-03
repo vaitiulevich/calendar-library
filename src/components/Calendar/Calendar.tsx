@@ -3,7 +3,6 @@ import { CalendarWrapper } from './styled';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
 import { defMaxDate, defMinDate, defRange } from '@constants/constants';
 import CalendarMonth from '@components/CalendarMonth/CalendarMonth';
-import { CalendarProvider } from '@store/CalendarContext';
 import CalendarWeek from '@components/CalendarWeek/CalendarWeek';
 import CalendarYaer from '@components/CalendarYaer/CalendarYaer';
 
@@ -23,6 +22,9 @@ export interface CalendarProps {
   isShowWeekDays?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   holidays?: IHoliday[];
+  handleDayClick?: (day: Date) => void;
+  selectedDay?: Date | null;
+  tasks?: { [key: string]: string[] };
 }
 
 const Calendar = ({
@@ -35,6 +37,9 @@ const Calendar = ({
   fillHolidayColor,
   isShowWeekDays = false,
   holidays,
+  handleDayClick,
+  selectedDay,
+  tasks,
   onClick,
   label,
 }: CalendarProps) => {
@@ -51,6 +56,9 @@ const Calendar = ({
             fillTodayColor={fillTodayColor}
             holidays={holidays}
             rangeYears={rangeYears}
+            handleDayClick={handleDayClick}
+            selectedDay={selectedDay}
+            tasks={tasks}
           />
         );
       case CalendarTypes.Week:
@@ -82,11 +90,7 @@ const Calendar = ({
     }
   };
 
-  return (
-    // <CalendarProvider initialDate={new Date()}>
-    <CalendarWrapper>{renderCalendarType()}</CalendarWrapper>
-    // </CalendarProvider>
-  );
+  return <CalendarWrapper>{renderCalendarType()}</CalendarWrapper>;
 };
 
 export default Calendar;
