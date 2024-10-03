@@ -14,17 +14,18 @@ export interface CalendarProps {
   type?: CalendarTypes.Month | CalendarTypes.Week | CalendarTypes.Yaer;
   fillTodayColor?: string;
   fillHolidayColor?: string;
-  label: string;
   startOfWeek?: WeekStart.Sunday | WeekStart.Monday;
   rangeYears: [number, number];
   minDate?: number;
   maxDate?: number;
   isShowWeekDays?: boolean;
-  onClick?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
   holidays?: IHoliday[];
   handleDayClick?: (day: Date) => void;
   selectedDay?: Date | null;
   tasks?: { [key: string]: string[] };
+  isInRange?: (date: string) => boolean;
+  startDate?: Date;
+  endDate?: Date;
 }
 
 const Calendar = ({
@@ -40,8 +41,9 @@ const Calendar = ({
   handleDayClick,
   selectedDay,
   tasks,
-  onClick,
-  label,
+  isInRange,
+  startDate,
+  endDate,
 }: CalendarProps) => {
   const renderCalendarType = () => {
     switch (type) {
@@ -59,6 +61,9 @@ const Calendar = ({
             handleDayClick={handleDayClick}
             selectedDay={selectedDay}
             tasks={tasks}
+            isInRange={isInRange}
+            startDate={startDate}
+            endDate={endDate}
           />
         );
       case CalendarTypes.Week:

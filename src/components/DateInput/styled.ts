@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const InputContainer = styled.div`
-  width: 240px;
+  width: 230px;
   padding: 0.6rem;
   margin-bottom: 0.5rem;
   border: 0.01rem solid #e1e1e1;
@@ -13,6 +13,10 @@ export const InputContainer = styled.div`
   img {
     height: 1rem;
   }
+`;
+
+export const InputLabel = styled.label`
+  font-family: 'Open Sans', sans-serif;
 `;
 
 export const StyledInput = styled.input`

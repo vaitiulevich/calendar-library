@@ -1,71 +1,66 @@
 import styled from 'styled-components';
 const colors = {
-  disabledToday: '#fff',
-  disabledWeekday: '#ff0000',
-  disabledDefault: '#333',
-  enabled: '#AAAAAA',
-};
-
-const getColor = ({
-  ismonthday,
-  istoday,
-  isweekday,
-}: {
-  ismonthday: boolean;
-  istoday: boolean;
-  isweekday: boolean;
-}) => {
-  if (ismonthday) {
-    if (istoday) {
-      return colors.disabledToday;
-    }
-    return isweekday ? colors.disabledWeekday : colors.disabledDefault;
-  }
-
-  return colors.enabled;
+  weekday: '#ff0000',
+  disabled: '#AAAAAA',
+  lightColor: '#fff',
+  darkColor: '#000',
 };
 
 export const DayButton = styled.button<{
-  istoday: boolean;
-  isselected?: boolean;
-  ismonthday: boolean;
   filltoday: string;
   fillholiday?: string;
-  isweekday: boolean;
-  isholiday?: boolean;
 }>`
   border: none;
-  background: ${({ istoday, filltoday }) => (istoday ? filltoday : 'none')};
-  color: ${({ ismonthday, istoday, isweekday }) =>
-    getColor({ ismonthday, istoday, isweekday })};
   font-size: 14px;
   cursor: pointer;
-  width: 30px;
-  height: 30px;
-  margin: 2px;
+  width: 34px;
+  height: 34px;
+  background-color: transparent;
   border-radius: 4px;
   position: relative;
 
-  ${({ isholiday, fillholiday }) =>
-    isholiday &&
-    `
-    border: 2px solid ${fillholiday};
-  `}
+  &.today {
+    background-color: ${({ filltoday }) => filltoday};
+    color: ${colors.lightColor};
+    border-radius: 4px;
+  }
 
-  ${({ isselected, filltoday }) =>
-    isselected &&
-    `
-    border: 0.01px solid ${filltoday};
-    box-shadow: 0 0 0.1rem ${filltoday};
-  `}
+  &.selected {
+    border: 0.01px solid ${({ filltoday }) => filltoday};
+    box-shadow: 0 0 0.1rem ${({ filltoday }) => filltoday};
+  }
+
+  &.weekday {
+    color: ${colors.weekday};
+  }
+
+  &.holiday {
+    border: 2px solid ${({ fillholiday }) => fillholiday};
+  }
+
+  &.in-range {
+    border-radius: 0;
+    background-color: #2f80ed1a;
+    color: ${({ filltoday }) => filltoday};
+  }
+  &.start-range {
+    border-radius: 4px 0 0 4px;
+    background-color: #2f80ed99;
+    color: ${colors.lightColor};
+  }
+  &.end-range {
+    border-radius: 0 4px 4px 0;
+    background-color: ${({ filltoday }) => filltoday};
+    color: ${colors.lightColor};
+  }
 
   &:disabled {
-    color: ${colors.enabled};
-    background: ${({ istoday, filltoday }) => (istoday ? '#eaeaea' : 'none')};
+    color: ${colors.disabled};
   }
 
   &:hover {
-    background-color: ${({ istoday }) => (istoday ? '#0056b3' : '#f1f1f1')};
+    background-color: #f1f1f1;
+    color: ${colors.darkColor};
   }
 `;
 
@@ -85,5 +80,4 @@ export const TaskIndicator = styled.div<{
 export const DaysGridContainer = styled.div`
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  gap: 2px;
 `;

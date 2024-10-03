@@ -6,9 +6,7 @@ import DaysGrid from '@components/DaysGrid/DaysGrid';
 import Navigation from '@components/Navigation/Navigation';
 import { defRange } from '@constants/constants';
 import { useCalendarContext } from '@store/CalendarContext';
-import { getDaysInMonth } from '@utils/getDaysInMonth';
 import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
-import { useToDoContext } from '@store/ToDoContext';
 
 export interface CalendarMonthProps {
   minDate?: number;
@@ -22,6 +20,9 @@ export interface CalendarMonthProps {
   handleDayClick?: (day: Date) => void;
   selectedDay?: Date | null;
   tasks?: { [key: string]: string[] };
+  isInRange?: (date: string) => boolean;
+  startDate?: Date;
+  endDate?: Date;
 }
 
 const CalendarMonth = ({
@@ -36,6 +37,9 @@ const CalendarMonth = ({
   handleDayClick,
   selectedDay,
   tasks,
+  isInRange,
+  startDate,
+  endDate,
 }: CalendarMonthProps) => {
   const { currentDate, today, handleSetMonth, handleSetYear } =
     useCalendarContext();
@@ -67,6 +71,9 @@ const CalendarMonth = ({
         fillHolidayColor={fillHolidayColor}
         isShowWeekDays={isShowWeekDays}
         selectedDay={selectedDay}
+        isInRange={isInRange}
+        startDate={startDate}
+        endDate={endDate}
       />
     </>
   );

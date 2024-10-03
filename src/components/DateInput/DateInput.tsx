@@ -1,30 +1,43 @@
-import React, { useState, useCallback, memo } from 'react';
-import { ClearButton, InputContainer, StyledInput } from './styled';
+import React, { useState, useCallback, memo, useEffect } from 'react';
+import { ClearButton, InputContainer, InputLabel, StyledInput } from './styled';
 import { images } from '@constants/images';
 import { countMonths, maxYearLength } from '@constants/constants';
 
 export interface DateInputProps {
-  handleSelectDate: (date: Date) => void;
+  handleSelectDate: (date: Date | null) => void;
   validateYear?: (year: string) => string;
   validateDate?: (date: Date) => boolean;
+  value?: Date | null;
+  labelText?: string;
 }
 
 const DateInput: React.FC<DateInputProps> = ({
   handleSelectDate,
   validateYear,
-  validateDate,
+  value,
+  labelText,
 }) => {
   const [inputValue, setInputValue] = useState('');
 
-  const sanitizeInput = (input: string) => input.replace(/\D/g, '');
+  const regExInput = (input: string) => input.replace(/\D/g, '');
 
-  const formatDate = (sanitizedValue: string) => {
-    const day = sanitizedValue.substring(0, 2);
-    const month = sanitizedValue.substring(2, 4);
-    const year = sanitizedValue.substring(4, 4 + maxYearLength);
+  const formatDate = (regExValue: string) => {
+    const day = regExValue.substring(0, 2);
+    const month = regExValue.substring(2, 4);
+    const year = regExValue.substring(4, 4 + maxYearLength);
     return { day, month, year };
   };
 
+  useEffect(() => {
+    if (value) {
+      const day = String(value.getDate()).padStart(2, '0');
+      const month = String(value.getMonth() + 1).padStart(2, '0');
+      const year = String(value.getFullYear());
+      setInputValue(`${day}/${month}/${year}`);
+    } else {
+      setInputValue('');
+    }
+  }, [value]);
   const validateMonth = (month: string) => {
     const monthNum = parseInt(month);
     return monthNum > countMonths ? `${countMonths}` : month;
@@ -45,8 +58,8 @@ const DateInput: React.FC<DateInputProps> = ({
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const sanitizedValue = sanitizeInput(event.target.value);
-    const { day, month, year } = formatDate(sanitizedValue);
+    const regExValue = regExInput(event.target.value);
+    const { day, month, year } = formatDate(regExValue);
 
     const validatedMonth = validateMonth(month);
     const validatedDay = validateDay(day, validatedMonth);
@@ -62,29 +75,32 @@ const DateInput: React.FC<DateInputProps> = ({
       handleSelectDate(date);
     }
 
-    if (sanitizedValue.trim().length === 0) {
+    if (regExValue.trim().length === 0) {
       handleClear();
     }
   };
 
   const handleClear = useCallback(() => {
     setInputValue('');
-    handleSelectDate(new Date());
+    handleSelectDate(null);
   }, [handleSelectDate]);
 
   return (
-    <InputContainer>
-      <img src={images.calendarIcon} alt="calendar" />
-      <StyledInput
-        type="text"
-        value={inputValue}
-        onChange={handleChange}
-        placeholder="Choose Date"
-      />
-      <ClearButton onClick={handleClear}>
-        <img src={images.clearInput} alt="clear" />
-      </ClearButton>
-    </InputContainer>
+    <>
+      {labelText && <InputLabel>{labelText}</InputLabel>}
+      <InputContainer>
+        <img src={images.calendarIcon} alt="calendar" />
+        <StyledInput
+          type="text"
+          value={inputValue}
+          onChange={handleChange}
+          placeholder="Choose Date"
+        />
+        <ClearButton onClick={handleClear}>
+          <img src={images.clearInput} alt="clear" />
+        </ClearButton>
+      </InputContainer>
+    </>
   );
 };
 

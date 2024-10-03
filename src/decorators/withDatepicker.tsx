@@ -9,12 +9,14 @@ const withDatepicker = (
   WrappedComponent: React.ComponentType<CalendarProps>,
 ) => {
   const WithDatepicker = (props: CalendarProps) => {
-    const { currentDate, handleSetMonth, handleSetYear } = useCalendarContext();
+    const { currentDate, handleSetMonth, handleSetYear, today } =
+      useCalendarContext();
 
     const handleSelectDate = useCallback(
-      (date: Date) => {
-        handleSetMonth(date.getMonth());
-        handleSetYear(date.getFullYear());
+      (date: Date | null) => {
+        const day = date ?? today;
+        handleSetMonth(day.getMonth());
+        handleSetYear(day.getFullYear());
       },
       [currentDate],
     );
