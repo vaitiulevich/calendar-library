@@ -19,10 +19,8 @@ export const DayButton = styled.button<{
   border-radius: 4px;
   position: relative;
 
-  &.today {
-    background-color: ${({ filltoday }) => filltoday};
-    color: ${colors.lightColor};
-    border-radius: 4px;
+  &:disabled {
+    color: ${colors.disabled};
   }
 
   &.selected {
@@ -36,6 +34,17 @@ export const DayButton = styled.button<{
 
   &.holiday {
     border: 2px solid ${({ fillholiday }) => fillholiday};
+  }
+
+  &.today {
+    background-color: ${({ filltoday }) => filltoday};
+    color: ${colors.lightColor};
+    border-radius: 4px;
+  }
+
+  &.today:disabled {
+    background-color: #ececec;
+    color: ${colors.lightColor};
   }
 
   &.in-range {
@@ -52,10 +61,6 @@ export const DayButton = styled.button<{
     border-radius: 0 4px 4px 0;
     background-color: ${({ filltoday }) => filltoday};
     color: ${colors.lightColor};
-  }
-
-  &:disabled {
-    color: ${colors.disabled};
   }
 
   &:hover {

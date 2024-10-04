@@ -9,7 +9,7 @@ export const PanelContainer = styled.div`
   color: #333;
 `;
 
-export const TaskInputContainer = styled.div`
+export const TaskInputForm = styled.form`
   display: flex;
   border: 1px solid #ccc;
   border-radius: 4px;

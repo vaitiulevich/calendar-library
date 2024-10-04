@@ -1,8 +1,13 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
-import { NavigationButton, NavigationWeek } from './styled';
+import React, { memo } from 'react';
+import { NavigationButton, NavigationWeeks } from './styled';
 import { images } from '@constants/images';
-import { useCalendar } from '@utils/useCalendar';
-import { WeekStart } from '@services/CalendarEnums';
+import {
+  DAYS_IN_A_WEEK,
+  FIRST_MONTH_INDEX,
+  INITIAL_WEEK_OFFSET,
+  LAST_MONTH_INDEX,
+  MAX_DAYS_IN_A_MONTH,
+} from '@constants/constants';
 
 interface NavigationYearsProps {
   currentDate: Date;
@@ -12,31 +17,32 @@ interface NavigationYearsProps {
   weekOffset: number;
   weeks: Date[][];
 }
-
-const NavigationWeeks: React.FC<NavigationYearsProps> = ({
+const NavigationWeek = ({
   currentDate,
   rangeYears,
   handleSetMonth,
   handleSetWeek,
   weekOffset,
   weeks,
-}) => {
-  const nextWeek = () => {
+}: NavigationYearsProps) => {
+  const handleNextWeek = () => {
     if (weekOffset + 1 >= weeks.length) {
-      handleSetWeek(0);
+      handleSetWeek(INITIAL_WEEK_OFFSET);
       handleSetMonth(currentDate.getMonth() + 1);
     } else {
       handleSetWeek(weekOffset + 1);
     }
   };
+
   const getWeeks = (year: number, month: number) => {
     const date = new Date(year, month, 1);
-    console.log(32 - date.getDate());
-    return Math.ceil((32 - date.getDate()) / 7) - 1;
+    return (
+      Math.ceil((MAX_DAYS_IN_A_MONTH - date.getDate()) / DAYS_IN_A_WEEK) - 1
+    );
   };
 
-  const prevWeek = () => {
-    if (weekOffset === 0) {
+  const handlePrevWeek = () => {
+    if (weekOffset === INITIAL_WEEK_OFFSET) {
       const res = getWeeks(
         currentDate.getFullYear(),
         currentDate.getMonth() - 1,
@@ -51,11 +57,13 @@ const NavigationWeeks: React.FC<NavigationYearsProps> = ({
   const month = currentDate.getMonth();
   const year = currentDate.getFullYear();
 
-  const isFirstMonth = month === 0;
-  const isLastMonth = month === 11;
+  const isFirstMonth = month === FIRST_MONTH_INDEX;
+  const isLastMonth = month === LAST_MONTH_INDEX;
 
   const isPrevWeekDisabled =
-    year === rangeYears[0] && isFirstMonth && weekOffset === 0;
+    year === rangeYears[0] &&
+    isFirstMonth &&
+    weekOffset === INITIAL_WEEK_OFFSET;
   const isNextWeekDisabled =
     weekOffset + 1 >= weeks.length && year === rangeYears[1] && isLastMonth;
 
@@ -63,18 +71,19 @@ const NavigationWeeks: React.FC<NavigationYearsProps> = ({
     month: 'short',
     year: 'numeric',
   });
+  const currentWeek = weekOffset + 1;
 
   return (
-    <NavigationWeek>
-      <NavigationButton disabled={isPrevWeekDisabled} onClick={prevWeek}>
+    <NavigationWeeks>
+      <NavigationButton disabled={isPrevWeekDisabled} onClick={handlePrevWeek}>
         <img src={images.prevMonth} alt="prev" />
       </NavigationButton>
-      <div>{`(${weekOffset + 1} week) ${currentMonthTitle}`}</div>
-      <NavigationButton disabled={isNextWeekDisabled} onClick={nextWeek}>
+      <div>{`(${currentWeek} week) ${currentMonthTitle}`}</div>
+      <NavigationButton disabled={isNextWeekDisabled} onClick={handleNextWeek}>
         <img src={images.nextMonth} alt="next" />
       </NavigationButton>
-    </NavigationWeek>
+    </NavigationWeeks>
   );
 };
 
-export default memo(NavigationWeeks);
+export default memo(NavigationWeek);
