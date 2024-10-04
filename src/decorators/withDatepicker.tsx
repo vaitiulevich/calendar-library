@@ -9,14 +9,21 @@ const withDatepicker = (
   WrappedComponent: React.ComponentType<CalendarProps>,
 ) => {
   const WithDatepicker = (props: CalendarProps) => {
-    const { currentDate, handleSetMonth, handleSetYear, today } =
-      useCalendarContext();
+    const {
+      currentDate,
+      handleSetMonth,
+      handleSetYear,
+      today,
+      selectedDay,
+      handleDayClick,
+    } = useCalendarContext();
 
     const handleSelectDate = useCallback(
       (date: Date | null) => {
         const day = date ?? today;
         handleSetMonth(day.getMonth());
         handleSetYear(day.getFullYear());
+        handleDayClick(day);
       },
       [currentDate],
     );
@@ -27,7 +34,7 @@ const withDatepicker = (
           handleSelectDate={handleSelectDate}
           rangeYears={props.rangeYears}
         />
-        <WrappedComponent {...props} />
+        <WrappedComponent selectedDay={selectedDay} {...props} />
       </>
     );
   };

@@ -46,7 +46,11 @@ const TaskPanel: React.FC<TaskPanelProps> = ({
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTask(e.target.value);
+    const value = e.target.value;
+    const isEmtyValue = value.trim() !== '' || value.length === 0;
+    if (isEmtyValue) {
+      setNewTask(value);
+    }
   };
 
   const renderTaskList = () => {

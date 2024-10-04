@@ -8,8 +8,8 @@ import React, {
 } from 'react';
 
 interface ToDoContextType {
-  handleDayClick: (day: Date) => void;
-  selectedDay: Date | null;
+  // handleDayClick: (day: Date) => void;
+  // selectedDay: Date | null;
   tasks: { [key: string]: Task[] };
   handleAddTask: (date: string, task: string) => void;
   handleRemoveTask: (date: string, taskId: string) => void;
@@ -27,8 +27,6 @@ interface ToDoProviderProps {
 }
 
 export const ToDoListProvider: React.FC<ToDoProviderProps> = ({ children }) => {
-  const [selectedDay, setSelectedDay] = useState<Date | null>(null);
-
   const getTasksFromStorage = (): { [key: string]: Task[] } => {
     try {
       const storedTasks = localStorage.getItem(titleTaskStorage);
@@ -70,15 +68,9 @@ export const ToDoListProvider: React.FC<ToDoProviderProps> = ({ children }) => {
     });
   }, []);
 
-  const handleDayClick = useCallback((day: Date) => {
-    setSelectedDay((prev) => (prev === day ? null : day));
-  }, []);
-
   return (
     <ToDoContext.Provider
       value={{
-        handleDayClick,
-        selectedDay,
         tasks,
         handleAddTask,
         handleRemoveTask,

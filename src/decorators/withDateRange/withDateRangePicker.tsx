@@ -60,6 +60,11 @@ const withDateRangePicker = (
       />
     );
 
+    const handleDayClick = (date: Date | null) => {
+      if (!date) return;
+      startDate ? handleEndDateChange(date) : handleStartDateChange(date);
+    };
+
     const isHasRange = startDate || endDate;
     return (
       <RangeCalendatContainer>
@@ -69,6 +74,7 @@ const withDateRangePicker = (
         </div>
         <WrappedComponent
           {...props}
+          handleDayClick={handleDayClick}
           isInRange={isInRange}
           {...(startDate ? { startDate } : {})}
           {...(endDate ? { endDate } : {})}
