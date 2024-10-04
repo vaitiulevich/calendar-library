@@ -8,12 +8,15 @@ import {
   holidays,
 } from '@constants/constants';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
-import withDatepicker from '@decorators/withDatepicker';
 import { CalendarProvider } from '@store/CalendarContext';
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
-import { ToDoListProvider } from '@store/ToDoContext';
-import withToDoList from '@decorators/withToDoList';
-import withDateRangePicker from '@decorators/withDateRange/withDateRangePicker';
+import withCalendarViews from '@decorators/withCalendarViews';
+
+interface ExtendedCalendarProps extends CalendarProps {
+  useToDoList?: boolean;
+  useDateRangePicker?: boolean;
+  useDatepicker?: boolean;
+}
 
 const meta: Meta<typeof Calendar> = {
   title: 'Calendar',
@@ -34,37 +37,11 @@ const Template = (args: CalendarProps) => (
   </ErrorBoundary>
 );
 
-const TemplateWithDatepicker = (args: CalendarProps) => {
-  const CalendarWithInput = withDatepicker(Calendar);
+const TemplateWithCalendarViews = (args: ExtendedCalendarProps) => {
+  const CalendarWithViews = withCalendarViews(Calendar);
   return (
     <ErrorBoundary>
-      <CalendarProvider initialDate={new Date()}>
-        <CalendarWithInput {...args} />
-      </CalendarProvider>
-    </ErrorBoundary>
-  );
-};
-
-const TemplateWithTodoList = (args: CalendarProps) => {
-  const CalendarWithInput = withToDoList(Calendar);
-  return (
-    <ErrorBoundary>
-      <CalendarProvider initialDate={new Date()}>
-        <ToDoListProvider>
-          <CalendarWithInput {...args} />
-        </ToDoListProvider>
-      </CalendarProvider>
-    </ErrorBoundary>
-  );
-};
-
-const TemplateWithRangePicker = (args: CalendarProps) => {
-  const CalendarWithRangePicker = withDateRangePicker(Calendar);
-  return (
-    <ErrorBoundary>
-      <CalendarProvider initialDate={new Date()}>
-        <CalendarWithRangePicker {...args} />
-      </CalendarProvider>
+      <CalendarWithViews {...args} />
     </ErrorBoundary>
   );
 };
@@ -79,20 +56,38 @@ export const Basic: Story = {
   render: Template,
 };
 
-export const CalendarWithRangePicker: Story = {
+export const CalendarWithCombineViews = {
   args: {
+    isToDoList: true,
+    isDatepicker: true,
+    isDateRangePicker: true,
     maxDate: defMaxDate,
     minDate: defMinDate,
   },
-  render: TemplateWithRangePicker,
+  render: TemplateWithCalendarViews,
 };
 
-export const CalendarWithTodoList: Story = {
-  render: TemplateWithTodoList,
+export const CalendarWithRangePicker = {
+  args: {
+    maxDate: defMaxDate,
+    minDate: defMinDate,
+    isDateRangePicker: true,
+  },
+  render: TemplateWithCalendarViews,
 };
 
-export const CalendarWithDatepicker: Story = {
-  render: TemplateWithDatepicker,
+export const CalendarWithTodoList = {
+  args: {
+    isToDoList: true,
+  },
+  render: TemplateWithCalendarViews,
+};
+
+export const CalendarWithDatepicker = {
+  args: {
+    isDatepicker: true,
+  },
+  render: TemplateWithCalendarViews,
 };
 
 export const CalendarWithWeekdays: Story = {

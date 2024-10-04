@@ -33,6 +33,7 @@ const withDatepicker = (
         <EnhancedDateInput
           handleSelectDate={handleSelectDate}
           rangeYears={props.rangeYears}
+          labelText="Date"
         />
         <WrappedComponent selectedDay={selectedDay} {...props} />
       </>
