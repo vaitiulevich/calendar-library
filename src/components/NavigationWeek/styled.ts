@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-export const NavigationWeek = styled.div`
+export const NavigationWeeks = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;

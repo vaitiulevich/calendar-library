@@ -1,24 +1,18 @@
 import { CalendarProps } from '@components/Calendar/Calendar';
 import TaskPanel from '@components/TaskPanel/TaskPanel';
+import { useCalendarContext } from '@store/CalendarContext';
 import { useToDoContext } from '@store/ToDoContext';
 import React, { useCallback } from 'react';
 
 const withToDoList = (WrappedComponent: React.ComponentType<CalendarProps>) => {
   return (props: CalendarProps) => {
-    const {
-      handleDayClick,
-      selectedDay,
-      tasks,
-      handleAddTask,
-      handleRemoveTask,
-    } = useToDoContext();
+    const { tasks, handleAddTask, handleRemoveTask } = useToDoContext();
+    const { handleDayClick, selectedDay } = useCalendarContext();
     const onClosePanel = useCallback(() => {
-      if (selectedDay) {
-        handleDayClick(selectedDay);
-      } else {
-        handleDayClick(new Date());
-      }
+      handleDayClick(selectedDay || new Date());
     }, [selectedDay]);
+    const tasksList =
+      tasks[selectedDay ? selectedDay?.toDateString() : 0] || [];
     return (
       <>
         <WrappedComponent
@@ -30,9 +24,9 @@ const withToDoList = (WrappedComponent: React.ComponentType<CalendarProps>) => {
         {selectedDay && (
           <TaskPanel
             date={selectedDay}
-            tasks={tasks[selectedDay ? selectedDay?.toDateString() : 0] || []}
-            onAddTask={handleAddTask}
-            onRemoveTask={handleRemoveTask}
+            tasks={tasksList}
+            handleAddTask={handleAddTask}
+            handleRemoveTask={handleRemoveTask}
             onClose={onClosePanel}
           />
         )}

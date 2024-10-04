@@ -5,6 +5,7 @@ import { defMaxDate, defMinDate, defRange } from '@constants/constants';
 import CalendarMonth from '@components/CalendarMonth/CalendarMonth';
 import CalendarWeek from '@components/CalendarWeek/CalendarWeek';
 import CalendarYaer from '@components/CalendarYaer/CalendarYaer';
+import { Task } from '@store/ToDoContext';
 
 export interface IHoliday {
   title: string;
@@ -22,7 +23,7 @@ export interface CalendarProps {
   holidays?: IHoliday[];
   handleDayClick?: (day: Date) => void;
   selectedDay?: Date | null;
-  tasks?: { [key: string]: string[] };
+  tasks?: { [key: string]: Task[] };
   isInRange?: (date: string) => boolean;
   startDate?: Date;
   endDate?: Date;

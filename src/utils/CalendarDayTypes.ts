@@ -4,7 +4,7 @@ export const isHoliday = (day: Date, holidays?: IHoliday[]): boolean => {
   return (
     holidays?.some((item) => {
       const holidayDate = new Date(item.date);
-      return holidayDate.toDateString() === day.toDateString();
+      return isDateEqual(holidayDate, day);
     }) ?? false
   );
 };

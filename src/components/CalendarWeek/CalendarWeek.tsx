@@ -1,15 +1,15 @@
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import React from 'react';
 import { IHoliday } from '@components/Calendar/Calendar';
 import { WeekStart } from '@services/CalendarEnums';
 import DaysGrid from '@components/DaysGrid/DaysGrid';
 import { defRange } from '@constants/constants';
 import { useCalendarContext } from '@store/CalendarContext';
-import { getDaysInMonth } from '@utils/getDaysInMonth';
 import NavigationWeek from '@components/NavigationWeek/NavigationWeek';
 import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
+import useWeeks from '@utils/useWeeks';
 
-interface CalendarMonthProps {
+interface CalendarWeekProps {
   minDate?: number;
   maxDate?: number;
   fillTodayColor?: string;
@@ -20,7 +20,7 @@ interface CalendarMonthProps {
   rangeYears?: [number, number];
 }
 
-const CalendarMonth = ({
+const CalendarWeek = ({
   minDate,
   maxDate,
   fillTodayColor,
@@ -29,7 +29,7 @@ const CalendarMonth = ({
   holidays,
   startOfWeek = WeekStart.Monday,
   rangeYears = defRange,
-}: CalendarMonthProps) => {
+}: CalendarWeekProps) => {
   const { currentDate, today, handleSetMonth } = useCalendarContext();
 
   const [weekOffset, setWeekOffset] = useState(() => {
@@ -48,13 +48,8 @@ const CalendarMonth = ({
     setWeekOffset(week);
   }, []);
 
-  const weeks = useMemo(() => {
-    const weekChunks: Date[][] = [];
-    for (let i = 0; i < days.length; i += 7) {
-      weekChunks.push(days.slice(i, i + 7));
-    }
-    return weekChunks;
-  }, [days]);
+  const weeks = useWeeks(days);
+  const currentWeek = weeks[weekOffset];
 
   return (
     weeks.length > 0 && (
@@ -68,7 +63,7 @@ const CalendarMonth = ({
           weeks={weeks}
         />
         <DaysGrid
-          days={weeks[weekOffset]}
+          days={currentWeek}
           minDate={minDate}
           maxDate={maxDate}
           currentDate={currentDate}
@@ -83,4 +78,4 @@ const CalendarMonth = ({
   );
 };
 
-export default memo(CalendarMonth);
+export default memo(CalendarWeek);

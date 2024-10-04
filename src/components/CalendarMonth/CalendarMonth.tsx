@@ -7,6 +7,7 @@ import Navigation from '@components/Navigation/Navigation';
 import { defRange } from '@constants/constants';
 import { useCalendarContext } from '@store/CalendarContext';
 import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
+import { Task } from '@store/ToDoContext';
 
 export interface CalendarMonthProps {
   minDate?: number;
@@ -19,7 +20,7 @@ export interface CalendarMonthProps {
   rangeYears?: [number, number];
   handleDayClick?: (day: Date) => void;
   selectedDay?: Date | null;
-  tasks?: { [key: string]: string[] };
+  tasks?: { [key: string]: Task[] };
   isInRange?: (date: string) => boolean;
   startDate?: Date;
   endDate?: Date;

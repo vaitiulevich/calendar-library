@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const PanelContainer = styled.div`
-  width: 240px;
+  width: 230px;
   border: 1px solid #ccc;
   padding: 0.6rem;
   border-radius: 8px;
@@ -9,7 +9,7 @@ export const PanelContainer = styled.div`
   color: #333;
 `;
 
-export const TaskInputContainer = styled.div`
+export const TaskInputForm = styled.form`
   display: flex;
   border: 1px solid #ccc;
   border-radius: 4px;

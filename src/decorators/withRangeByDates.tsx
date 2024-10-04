@@ -17,23 +17,29 @@ const withRangeByDate = (WrappedComponent: React.FC<DateInputProps>) => {
     labelText,
     handleSelectDate,
   }: WithRangeDateProps) => {
+    const compareDate = (
+      date: Date,
+      minDate: Date | null | undefined,
+      maxDate: Date | null | undefined,
+    ) => {
+      const isInMinRange = minDate && date < minDate;
+      const isInMaxRange = maxDate && date > maxDate;
+
+      if (isInMinRange) return minDate;
+      if (isInMaxRange) return maxDate;
+      return date;
+    };
     const handleDateChange = (date: Date | null) => {
-      if (!date) {
+      const selectedDate = date ? new Date(date) : null;
+
+      if (!selectedDate) {
         return handleSelectDate(null);
       }
 
-      const newDate = new Date(date);
-      if (!minDate || !maxDate) {
-        return handleSelectDate(newDate);
-      }
-      if (newDate < minDate) {
-        handleSelectDate(minDate);
-      } else if (newDate > maxDate) {
-        handleSelectDate(maxDate);
-      } else {
-        return handleSelectDate(newDate);
-      }
+      const clampedDate = compareDate(selectedDate, minDate, maxDate);
+      handleSelectDate(clampedDate);
     };
+
     return (
       <WrappedComponent
         handleSelectDate={handleDateChange}

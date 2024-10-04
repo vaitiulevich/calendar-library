@@ -46,6 +46,11 @@ export const AVAILABLE_NUMBER_DAYS = 5;
 export const countMonths = 12;
 export const maxYearLength = 4;
 
+export const FIRST_MONTH_INDEX = 0;
+export const LAST_MONTH_INDEX = countMonths - 1;
+export const INITIAL_WEEK_OFFSET = 0;
+export const MAX_DAYS_IN_A_MONTH = 32;
+
 export const maxLengthTask = 40;
 
 export const titleTaskStorage = 'tasks';

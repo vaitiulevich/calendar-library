@@ -5,56 +5,62 @@ import {
   DeleteTaskButton,
   PanelContainer,
   TaskInput,
-  TaskInputContainer,
+  TaskInputForm,
   TaskItem,
   TaskList,
   TaskTitle,
 } from './styled';
 import { images } from '@constants/images';
 import { maxLengthTask } from '@constants/constants';
+import { Task } from '@store/ToDoContext';
 
 interface TaskPanelProps {
   date: Date | null;
-  tasks: string[];
-  onAddTask: (date: string, task: string) => void;
+  tasks: Task[];
+  handleAddTask: (date: string, task: string) => void;
   onClose: () => void;
-  onRemoveTask: (date: string, taskIndex: number) => void;
+  handleRemoveTask: (date: string, taskId: string) => void;
 }
 
 const TaskPanel: React.FC<TaskPanelProps> = ({
   date,
   tasks,
-  onAddTask,
-  onRemoveTask,
+  handleAddTask,
+  handleRemoveTask,
   onClose,
 }) => {
   const [newTask, setNewTask] = useState('');
 
-  const handleSubmit = () => {
+  const submitTask = (e: React.FormEvent) => {
+    e.preventDefault();
     if (newTask && date) {
-      onAddTask(date.toDateString(), newTask);
+      handleAddTask(date.toDateString(), newTask);
       setNewTask('');
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      handleSubmit();
+      submitTask(e);
     }
   };
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewTask(e.target.value);
+    const value = e.target.value;
+    const isEmtyValue = value.trim() !== '' || value.length === 0;
+    if (isEmtyValue) {
+      setNewTask(value);
+    }
   };
 
   const renderTaskList = () => {
-    return tasks.map((task, index) => (
-      <TaskItem key={task + index}>
-        <span>{task}</span>
+    return tasks.map((task) => (
+      <TaskItem key={task.id}>
+        <span>{task.task}</span>
         <DeleteTaskButton
-          onClick={() => onRemoveTask(date?.toDateString() || '', index)}
+          onClick={() => handleRemoveTask(date?.toDateString() || '', task.id)}
         >
-          <img src={images.clearInput} />
+          <img src={images.clearInput} alt="clear" />
         </DeleteTaskButton>
       </TaskItem>
     ));
@@ -63,17 +69,17 @@ const TaskPanel: React.FC<TaskPanelProps> = ({
   return (
     <PanelContainer>
       <TaskTitle>Tasks for {date?.toLocaleDateString()}</TaskTitle>
-      <TaskInputContainer>
+      <TaskInputForm onSubmit={submitTask}>
         <TaskInput
           type="text"
           maxLength={maxLengthTask}
           value={newTask}
           onChange={onChangeInput}
-          onKeyDown={handleKeyDown}
+          onKeyDown={handleKeyPress}
           placeholder="Write task"
         />
-        <AddButton onClick={handleSubmit}>Add</AddButton>
-      </TaskInputContainer>
+        <AddButton type="submit">Add</AddButton>
+      </TaskInputForm>
 
       <TaskList>{renderTaskList()}</TaskList>
       <CloseButton onClick={onClose}>Close</CloseButton>
