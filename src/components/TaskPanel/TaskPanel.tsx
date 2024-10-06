@@ -55,10 +55,11 @@ const TaskPanel: React.FC<TaskPanelProps> = ({
 
   const renderTaskList = () => {
     return tasks.map((task) => (
-      <TaskItem key={task.id}>
+      <TaskItem className="task-item" key={task.id}>
         <span>{task.task}</span>
         <DeleteTaskButton
           onClick={() => handleRemoveTask(date?.toDateString() || '', task.id)}
+          data-testid="delete-task-button"
         >
           <img src={images.clearInput} alt="clear" />
         </DeleteTaskButton>

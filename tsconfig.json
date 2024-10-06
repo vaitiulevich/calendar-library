@@ -16,6 +16,7 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "types": ["cypress", "node"],
     "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
@@ -27,6 +28,7 @@
       "@services/*": ["services/*"],
       "@types/*": ["types/*"],
       "@store/*": ["store/*"],
+      "@tests/*": ["tests/*"],
       "/*": ["/*"]
     }
   },
