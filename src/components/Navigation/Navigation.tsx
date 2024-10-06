@@ -37,10 +37,15 @@ const Navigation = ({
 
   return (
     <NavigationWrapper>
-      <NavigationButton disabled={isPrevYearDisabled} onClick={handlePrevYear}>
+      <NavigationButton
+        data-cy="prev-year-button"
+        disabled={isPrevYearDisabled}
+        onClick={handlePrevYear}
+      >
         <img src={images.prevYear} alt="prev year" />
       </NavigationButton>
       <NavigationButton
+        data-cy="prev-month-button"
         onClick={handlePrevMonth}
         disabled={isPrevMonthDisabled}
       >
@@ -52,10 +57,15 @@ const Navigation = ({
       <NavigationButton
         onClick={handleNextMonth}
         disabled={isNextMonthDisabled}
+        data-cy="next-month-button"
       >
         <img src={images.nextMonth} alt="next" />
       </NavigationButton>
-      <NavigationButton disabled={isNextYearDisabled} onClick={handleNextYear}>
+      <NavigationButton
+        data-cy="next-year-button"
+        disabled={isNextYearDisabled}
+        onClick={handleNextYear}
+      >
         <img src={images.nextYear} alt="next year" />
       </NavigationButton>
     </NavigationWrapper>

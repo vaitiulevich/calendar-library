@@ -70,8 +70,8 @@ const DateInput: React.FC<DateInputProps> = ({
   }, [handleSelectDate]);
 
   return (
-    <>
-      {labelText && <InputLabel>{labelText}</InputLabel>}
+    <InputLabel>
+      {labelText && labelText}
       <InputContainer>
         <img src={images.calendarIcon} alt="calendar" />
         <StyledInput
@@ -80,11 +80,11 @@ const DateInput: React.FC<DateInputProps> = ({
           onChange={handleChange}
           placeholder="Choose Date"
         />
-        <ClearButton onClick={handleClear}>
+        <ClearButton onClick={handleClear} data-cy="clear-button">
           <img src={images.clearInput} alt="clear" />
         </ClearButton>
       </InputContainer>
-    </>
+    </InputLabel>
   );
 };
 

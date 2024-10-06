@@ -20,14 +20,14 @@ const CalendarContext = createContext<CalendarContextType | undefined>(
 );
 
 interface CalendarProviderProps {
-  initialDate: Date;
+  initialDate?: Date;
   children: ReactNode;
 }
 export const CalendarProvider: React.FC<CalendarProviderProps> = ({
   children,
   initialDate,
 }) => {
-  const [currentDate, setCurrentDate] = useState(initialDate);
+  const [currentDate, setCurrentDate] = useState(initialDate ?? new Date());
 
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
 
