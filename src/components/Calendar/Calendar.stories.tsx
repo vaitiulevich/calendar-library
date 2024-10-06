@@ -8,8 +8,6 @@ import {
   holidays,
 } from '@constants/constants';
 import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
-import { CalendarProvider } from '@store/CalendarContext';
-import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 import withCalendarViews from '@decorators/withCalendarViews';
 
 interface ExtendedCalendarProps extends CalendarProps {
@@ -29,21 +27,11 @@ const meta: Meta<typeof Calendar> = {
 export default meta;
 type Story = StoryObj<typeof Calendar>;
 
-const Template = (args: CalendarProps) => (
-  <ErrorBoundary>
-    <CalendarProvider initialDate={new Date()}>
-      <Calendar {...args} />
-    </CalendarProvider>
-  </ErrorBoundary>
-);
+const Template = (args: CalendarProps) => <Calendar {...args} />;
 
 const TemplateWithCalendarViews = (args: ExtendedCalendarProps) => {
   const CalendarWithViews = withCalendarViews(Calendar);
-  return (
-    <ErrorBoundary>
-      <CalendarWithViews {...args} />
-    </ErrorBoundary>
-  );
+  return <CalendarWithViews {...args} />;
 };
 
 export const Basic: Story = {

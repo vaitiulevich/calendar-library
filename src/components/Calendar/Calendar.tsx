@@ -6,6 +6,8 @@ import CalendarMonth from '@components/CalendarMonth/CalendarMonth';
 import CalendarWeek from '@components/CalendarWeek/CalendarWeek';
 import CalendarYaer from '@components/CalendarYaer/CalendarYaer';
 import { Task } from '@store/ToDoContext';
+import { CalendarProvider } from '@store/CalendarContext';
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 
 export interface IHoliday {
   title: string;
@@ -96,7 +98,13 @@ const Calendar = ({
     }
   };
 
-  return <CalendarWrapper>{renderCalendarType()}</CalendarWrapper>;
+  return (
+    <ErrorBoundary>
+      <CalendarProvider initialDate={new Date()}>
+        <CalendarWrapper>{renderCalendarType()}</CalendarWrapper>
+      </CalendarProvider>
+    </ErrorBoundary>
+  );
 };
 
 export default Calendar;
