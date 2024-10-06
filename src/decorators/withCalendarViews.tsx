@@ -5,6 +5,7 @@ import withToDoList from '@decorators/withToDoList';
 import withDatepicker from '@decorators/withDatepicker';
 import withDateRangePicker from '@decorators/withDateRange/withDateRangePicker';
 import { CalendarProps } from '@components/Calendar/Calendar';
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 
 interface DynamicViewsProps extends CalendarProps {
   isToDoList?: boolean;
@@ -32,11 +33,13 @@ const withCalendarViews = (
     }
 
     const ComponentWithProviders = (
-      <CalendarProvider initialDate={new Date()}>
-        <ToDoListProvider>
-          <EnhancedComponent {...props} />
-        </ToDoListProvider>
-      </CalendarProvider>
+      <ErrorBoundary>
+        <CalendarProvider initialDate={new Date()}>
+          <ToDoListProvider>
+            <EnhancedComponent {...props} />
+          </ToDoListProvider>
+        </CalendarProvider>
+      </ErrorBoundary>
     );
 
     return ComponentWithProviders;
