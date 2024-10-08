@@ -27,6 +27,11 @@ const outputOptions = [
     format: 'esm',
     sourcemap: true,
   },
+  {
+    file: 'build/bundle.js',
+    format: 'cjs',
+    sourcemap: true,
+  },
 ];
 
 export default [
