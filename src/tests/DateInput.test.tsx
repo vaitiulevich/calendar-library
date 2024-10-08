@@ -1,5 +1,3 @@
-// DateInput.test.tsx
-
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import DateInput from '@components/DateInput/DateInput';

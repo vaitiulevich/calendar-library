@@ -35,22 +35,22 @@ test('renders TaskPanel with tasks', () => {
   expect(getByText('Test task 2')).toBeInTheDocument();
 });
 
-// test('removes a task', () => {
-//   const { getByTestId } = render(
-//     <TaskPanel
-//       date={new Date(2024, 9, 5)}
-//       tasks={mockTasks}
-//       handleAddTask={jest.fn()}
-//       handleRemoveTask={mockHandleRemoveTask}
-//       onClose={mockOnClose}
-//     />,
-//   );
-//   //   const deleteButton = getByAltText('delete');
-//   const deleteButton = getByTestId('delete-task-button');
-//   fireEvent.click(deleteButton);
+test('removes a task', () => {
+  const { getByTestId } = render(
+    <TaskPanel
+      date={new Date(2024, 9, 5)}
+      tasks={mockTasks}
+      handleAddTask={jest.fn()}
+      handleRemoveTask={mockHandleRemoveTask}
+      onClose={mockOnClose}
+    />,
+  );
+  //   const deleteButton = getByAltText('delete');
+  const deleteButton = getByTestId('delete-task-button');
+  fireEvent.click(deleteButton);
 
-//   expect(mockHandleRemoveTask).toHaveBeenCalledWith('2024-10-05', '1');
-// });
+  expect(mockHandleRemoveTask).toHaveBeenCalledWith('2024-10-05', '1');
+});
 
 test('closes the task panel', () => {
   const { getByText } = render(

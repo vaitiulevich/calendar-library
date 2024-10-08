@@ -3,7 +3,7 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import withDatepicker from '@decorators/withDatepicker';
 import { CalendarProvider } from '@store/CalendarContext';
 import { defRange } from '@constants/constants';
-import Calendar from '@components/Calendar';
+import Calendar from '@components/Calendar/Calendar';
 
 const MockComponent = () => <Calendar rangeYears={defRange} />;
 

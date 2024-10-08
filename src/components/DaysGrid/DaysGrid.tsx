@@ -33,7 +33,7 @@ const DaysGrid = ({
   minDate = defMinDate,
   maxDate = defMaxDate,
   fillTodayColor = '#007bff',
-  fillHolidayColor,
+  fillHolidayColor = '#007bff',
   isShowWeekDays,
   holidays,
   startOfWeek = WeekStart.Monday,
