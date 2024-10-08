@@ -12,7 +12,7 @@ A flexible and customizable calendar component built with React. This library pr
 
 ## Demo
 
-You can see the calendar in action at the following link: <a href="">Live Demo</a>.
+You can see the calendar in action at the following link: <a href="https://mod-calendar.netlify.app/">Live Demo</a>.
 
 ## Installation
 
