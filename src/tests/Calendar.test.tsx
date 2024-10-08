@@ -1,6 +1,6 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
-import Calendar from '@components/Calendar';
+import Calendar from '@components/Calendar/Calendar';
 import { CalendarProvider } from '@store/CalendarContext';
 import { ToDoListProvider } from '@store/ToDoContext';
 import { getDayClass } from '@utils/daysTypesUtils';

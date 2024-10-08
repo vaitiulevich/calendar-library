@@ -4,10 +4,10 @@ import { ToDoListProvider } from '@store/ToDoContext';
 import withToDoList from '@decorators/withToDoList';
 import withDatepicker from '@decorators/withDatepicker';
 import withDateRangePicker from '@decorators/withDateRange/withDateRangePicker';
-import { CalendarProps } from '@components/Calendar/Calendar';
+import { CalendarProps } from '../../src/components/Calendar/Calendar';
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 
-interface DynamicViewsProps extends CalendarProps {
+export interface DynamicViewsProps extends CalendarProps {
   isToDoList?: boolean;
   isDateRangePicker?: boolean;
   isDatepicker?: boolean;

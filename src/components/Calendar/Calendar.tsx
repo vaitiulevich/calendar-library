@@ -5,19 +5,20 @@ import { defMaxDate, defMinDate, defRange } from '@constants/constants';
 import CalendarMonth from '@components/CalendarMonth/CalendarMonth';
 import CalendarWeek from '@components/CalendarWeek/CalendarWeek';
 import CalendarYaer from '@components/CalendarYaer/CalendarYaer';
-import { Task } from '@store/ToDoContext';
+import { Task } from '../../store/ToDoContext';
 import { CalendarProvider } from '@store/CalendarContext';
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
+import withCalendarViews from '../../decorators/withCalendarViews';
 
 export interface IHoliday {
   title: string;
   date: Date;
 }
 export interface CalendarProps {
-  type?: CalendarTypes.Month | CalendarTypes.Week | CalendarTypes.Yaer;
+  type?: 'month' | 'week' | 'year';
   fillTodayColor?: string;
   fillHolidayColor?: string;
-  startOfWeek?: WeekStart.Sunday | WeekStart.Monday;
+  startOfWeek?: 'sunday' | 'monday';
   rangeYears: [number, number];
   minDate?: number;
   maxDate?: number;
@@ -32,10 +33,10 @@ export interface CalendarProps {
 }
 
 const Calendar = ({
-  type = CalendarTypes.Month,
+  type = 'month',
   minDate = defMinDate,
   maxDate = defMaxDate,
-  startOfWeek = WeekStart.Monday,
+  startOfWeek = 'monday',
   rangeYears = defRange,
   fillTodayColor = '#007bff',
   fillHolidayColor,
@@ -107,4 +108,4 @@ const Calendar = ({
   );
 };
 
-export default Calendar;
+export default withCalendarViews(Calendar);

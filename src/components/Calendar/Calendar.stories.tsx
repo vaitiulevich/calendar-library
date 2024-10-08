@@ -1,20 +1,12 @@
 import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
-import Calendar, { CalendarProps } from './Calendar';
+import Calendar, { CalendarProps } from '@components/Calendar/Calendar';
 import {
   defMaxDate,
   defMinDate,
   defRange,
   holidays,
 } from '@constants/constants';
-import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
-import withCalendarViews from '@decorators/withCalendarViews';
-
-interface ExtendedCalendarProps extends CalendarProps {
-  useToDoList?: boolean;
-  useDateRangePicker?: boolean;
-  useDatepicker?: boolean;
-}
 
 const meta: Meta<typeof Calendar> = {
   title: 'Calendar',
@@ -28,11 +20,6 @@ export default meta;
 type Story = StoryObj<typeof Calendar>;
 
 const Template = (args: CalendarProps) => <Calendar {...args} />;
-
-const TemplateWithCalendarViews = (args: ExtendedCalendarProps) => {
-  const CalendarWithViews = withCalendarViews(Calendar);
-  return <CalendarWithViews {...args} />;
-};
 
 export const Basic: Story = {
   args: {
@@ -52,7 +39,7 @@ export const CalendarWithCombineViews = {
     maxDate: defMaxDate,
     minDate: defMinDate,
   },
-  render: TemplateWithCalendarViews,
+  render: Template,
 };
 
 export const CalendarWithRangePicker = {
@@ -61,21 +48,21 @@ export const CalendarWithRangePicker = {
     minDate: defMinDate,
     isDateRangePicker: true,
   },
-  render: TemplateWithCalendarViews,
+  render: Template,
 };
 
 export const CalendarWithTodoList = {
   args: {
     isToDoList: true,
   },
-  render: TemplateWithCalendarViews,
+  render: Template,
 };
 
 export const CalendarWithDatepicker = {
   args: {
     isDatepicker: true,
   },
-  render: TemplateWithCalendarViews,
+  render: Template,
 };
 
 export const CalendarWithWeekdays: Story = {
@@ -89,7 +76,7 @@ export const CalendarWithWeekdays: Story = {
 export const YearsTypeCalendar: Story = {
   args: {
     ...Basic.args,
-    type: CalendarTypes.Yaer,
+    type: 'year',
   },
   render: Template,
 };
@@ -97,7 +84,7 @@ export const YearsTypeCalendar: Story = {
 export const WeeksTypeCalendar: Story = {
   args: {
     ...Basic.args,
-    type: CalendarTypes.Week,
+    type: 'week',
   },
   render: Template,
 };
@@ -105,7 +92,7 @@ export const WeeksTypeCalendar: Story = {
 export const StartWeekOnSunday: Story = {
   args: {
     ...Basic.args,
-    startOfWeek: WeekStart.Sunday,
+    startOfWeek: 'sunday',
   },
   render: Template,
 };
