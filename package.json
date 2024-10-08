@@ -79,9 +79,8 @@
   "scripts": {
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006",
-    "build": "storybook build",
-    "build:lib": "rollup -c",
-    "build:storybook": "build-storybook -o build/storybook",
+    "build:storybook": "storybook build -o build/storybook",
+    "build": "rollup -c",
     "lint": "eslint . --ext .ts,.tsx",
     "format": "prettier --write .",
     "test": "jest",
