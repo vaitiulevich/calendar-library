@@ -10,6 +10,7 @@ const config: StorybookConfig = {
     '@storybook/addon-essentials',
     '@chromatic-com/storybook',
     '@storybook/addon-interactions',
+    '@storybook/addon-jest',
   ],
   framework: {
     name: '@storybook/react-webpack5',
@@ -25,6 +26,8 @@ const config: StorybookConfig = {
         '@constants': path.resolve(__dirname, '../src/constants'),
         '@decorators': path.resolve(__dirname, '../src/decorators'),
         '@services': path.resolve(__dirname, '../src/services'),
+        '@store': path.resolve(__dirname, '../src/store'),
+        '@tests': path.resolve(__dirname, '../src/tests'),
         '@types': path.resolve(__dirname, '../src/types'),
       };
     }

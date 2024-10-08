@@ -1,36 +1,55 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { MonthTitle, YearButton, YearsGridWrapper } from './styled';
-import { months } from '@constants/constants';
+import { defRange, months } from '@constants/constants';
 import { WeekStart } from '@services/CalendarEnums';
-import { useCalendar } from '@utils/useCalendar';
-import MonthGrid from '@components/MonthGrid/MonthGrid';
+import DaysGrid from '@components/DaysGrid/DaysGrid';
+import { useCalendarContext } from '@store/CalendarContext';
+import { getDaysInMonth } from '@utils/getDaysInMonth';
+import { IHoliday } from '@components/Calendar/Calendar';
+import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
 
 interface YearsGridProps {
-  today: Date;
-  currentYear: number;
   fillTodayColor?: string;
   fillHolidayColor?: string;
+  startOfWeek: string;
+  rangeYears?: [number, number];
+  isShowWeekDays?: boolean;
+  minDate?: number;
+  maxDate?: number;
+  holidays?: IHoliday[];
 }
 
 const YearsGrid: React.FC<YearsGridProps> = ({
-  today,
-  currentYear,
   fillHolidayColor,
   fillTodayColor,
+  isShowWeekDays,
+  startOfWeek,
+  rangeYears,
+  minDate,
+  maxDate,
+  holidays,
 }) => {
+  const { currentDate, today } = useCalendarContext();
   const renderYears = () => {
     return months.map((month, index) => {
-      const thisMonthDate = new Date(currentYear, index, 1);
-      // console.log(thisMonthDate);
-
-      const { days } = useCalendar(thisMonthDate, WeekStart.Monday);
+      const thisMonthDate = new Date(currentDate.getFullYear(), index, 1);
+      const days = useUpdateDaysForMonth(
+        rangeYears ?? defRange,
+        startOfWeek,
+        thisMonthDate,
+        currentDate,
+      );
       return (
         <YearButton key={month}>
           <MonthTitle>{month}</MonthTitle>
-          <MonthGrid
+          <DaysGrid
             currentDate={thisMonthDate}
             fillTodayColor={fillTodayColor}
             fillHolidayColor={fillHolidayColor}
+            isShowWeekDays={isShowWeekDays}
+            holidays={holidays}
+            maxDate={maxDate}
+            minDate={minDate}
             today={today}
             days={days}
           />

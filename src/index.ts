@@ -1,3 +1,1 @@
-import Calendar from '@components/Calendar';
-
-export { Calendar };
+export { default as Calendar } from '../src/components/Calendar/Calendar';

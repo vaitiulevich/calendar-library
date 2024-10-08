@@ -1,0 +1,49 @@
+import React from 'react';
+import { CalendarProvider } from '@store/CalendarContext';
+import { ToDoListProvider } from '@store/ToDoContext';
+import withToDoList from '@decorators/withToDoList';
+import withDatepicker from '@decorators/withDatepicker';
+import withDateRangePicker from '@decorators/withDateRange/withDateRangePicker';
+import { CalendarProps } from '../../src/components/Calendar/Calendar';
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
+
+export interface DynamicViewsProps extends CalendarProps {
+  isToDoList?: boolean;
+  isDateRangePicker?: boolean;
+  isDatepicker?: boolean;
+}
+
+const withCalendarViews = (
+  WrappedComponent: React.ComponentType<DynamicViewsProps>,
+) => {
+  return (props: DynamicViewsProps) => {
+    const { isToDoList, isDateRangePicker, isDatepicker } = props;
+    let EnhancedComponent = WrappedComponent;
+
+    if (isToDoList) {
+      EnhancedComponent = withToDoList(WrappedComponent);
+    }
+
+    if (isDateRangePicker) {
+      EnhancedComponent = withDateRangePicker(EnhancedComponent);
+    }
+
+    if (isDatepicker) {
+      EnhancedComponent = withDatepicker(EnhancedComponent);
+    }
+
+    const ComponentWithProviders = (
+      <ErrorBoundary>
+        <CalendarProvider initialDate={new Date()}>
+          <ToDoListProvider>
+            <EnhancedComponent {...props} />
+          </ToDoListProvider>
+        </CalendarProvider>
+      </ErrorBoundary>
+    );
+
+    return ComponentWithProviders;
+  };
+};
+
+export default withCalendarViews;

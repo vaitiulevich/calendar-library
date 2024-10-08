@@ -1,10 +1,10 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "outDir": "lib",
+    "target": "esnext",
+    "outDir": "./lib",
     "lib": ["dom", "dom.iterable", "esnext"],
     "declaration": true,
-    "declarationDir": "lib",
+    "declarationDir": "./lib",
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -16,7 +16,8 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react",
+    "types": ["cypress", "node"],
+    "jsx": "react-jsx",
     "baseUrl": "./src",
     "paths": {
       "@components/*": ["components/*"],
@@ -26,9 +27,11 @@
       "@decorators/*": ["decorators/*"],
       "@services/*": ["services/*"],
       "@types/*": ["types/*"],
+      "@store/*": ["store/*"],
+      "@tests/*": ["tests/*"],
       "/*": ["/*"]
     }
   },
-  "include": ["src", "svg.d.ts"],
+  "include": ["src", "svg.d.ts", "src/**/*"],
   "exclude": ["node_modules", "lib"]
 }
