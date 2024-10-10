@@ -1,6 +1,6 @@
 {
   "name": "date-picker-library-vait",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Calendar librery",
   "license": "MIT",
   "main": "lib/src/index.js",

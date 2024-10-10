@@ -41,12 +41,13 @@ export const CalendarProvider: React.FC<CalendarProviderProps> = ({
   }, [selectedDay]);
 
   useEffect(() => {
-    if (
-      rangeYears &&
-      (currentDate.getFullYear() < rangeYears[0] ||
-        currentDate.getFullYear() > rangeYears[1])
-    ) {
-      handleSetYear(rangeYears[0]);
+    if (rangeYears) {
+      const currentYear = currentDate.getFullYear();
+      if (currentYear < rangeYears[0]) {
+        handleSetYear(rangeYears[0]);
+      } else if (currentYear > rangeYears[1]) {
+        handleSetYear(rangeYears[1]);
+      }
     }
   }, [rangeYears]);
 
