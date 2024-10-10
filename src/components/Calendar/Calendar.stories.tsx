@@ -55,6 +55,7 @@ export const YearsTypeCalendar: Story = {
   args: {
     ...Basic.args,
     type: CalendarTypes.Yaer,
+    isDatepicker: true,
   },
   argTypes: {
     ...Basic.argTypes,
@@ -66,7 +67,6 @@ export const WeeksTypeCalendar: Story = {
   args: {
     ...Basic.args,
     type: CalendarTypes.Week,
-    isDatepicker: true,
   },
   argTypes: {
     ...Basic.argTypes,
