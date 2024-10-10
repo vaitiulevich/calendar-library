@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 const colors = {
   weekday: '#ff0000',
+  disWeekday: '#ff8c8c',
   disabled: '#AAAAAA',
   lightColor: '#fff',
   darkColor: '#000',
@@ -19,17 +20,24 @@ export const DayButton = styled.button<{
   border-radius: 4px;
   position: relative;
 
-  &:disabled {
+  &.disabled {
     color: ${colors.disabled};
   }
 
-  &.selected {
+  &.today {
     border: 0.01px solid ${({ filltoday }) => filltoday};
     box-shadow: 0 0 0.1rem ${({ filltoday }) => filltoday};
+  }
+  &.today.disabled {
+    border: 0.01px solid ${colors.disabled};
+    box-shadow: 0 0 0.1rem ${colors.disabled};
   }
 
   &.weekday {
     color: ${colors.weekday};
+  }
+  &.weekday.disabled {
+    color: ${colors.disWeekday};
   }
 
   &.holiday {
@@ -37,13 +45,14 @@ export const DayButton = styled.button<{
     text-decoration-line: underline;
   }
 
-  &.today {
+  &.selected {
     background-color: ${({ filltoday }) => filltoday};
     color: ${colors.lightColor};
     border-radius: 4px;
+    transition: all 0.3s;
   }
 
-  &.today:disabled {
+  &.selected.disabled {
     background-color: #ececec;
     color: ${colors.lightColor};
   }

@@ -18,7 +18,7 @@ const withCalendarViews = (
   WrappedComponent: React.ComponentType<DynamicViewsProps>,
 ) => {
   return (props: DynamicViewsProps) => {
-    const { isToDoList, isDateRangePicker, isDatepicker } = props;
+    const { isToDoList, isDateRangePicker, isDatepicker, rangeYears } = props;
     let EnhancedComponent = WrappedComponent;
 
     if (isToDoList) {
@@ -35,7 +35,7 @@ const withCalendarViews = (
 
     const ComponentWithProviders = (
       <ErrorBoundary>
-        <CalendarProvider initialDate={new Date()}>
+        <CalendarProvider initialDate={new Date()} rangeYears={rangeYears}>
           <ToDoListProvider>
             <EnhancedComponent {...props} />
           </ToDoListProvider>

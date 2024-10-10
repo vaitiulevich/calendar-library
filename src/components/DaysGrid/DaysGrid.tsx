@@ -3,6 +3,7 @@ import { IHoliday } from '@components/Calendar/Calendar';
 import Weekdays from '@components/Weekdays/Weekdays';
 import { defMaxDate, defMinDate } from '@constants/constants';
 import { WeekStart } from '@services/CalendarEnums';
+import { useCalendarContext } from '@store/CalendarContext';
 import { Task } from '@store/ToDoContext';
 import { getDayClass } from '@utils/daysTypesUtils';
 
@@ -46,12 +47,13 @@ const DaysGrid = ({
   endDate,
 }: IDays) => {
   const renderDays = () => {
+    const { handleSetMonth, handleSetYear } = useCalendarContext();
     return days.map((day, index) => {
       const dateString = day.toDateString();
       const hasTasks = tasks ? tasks.hasOwnProperty(dateString) : false;
       const isRange = isInRange ? isInRange(dateString) : false;
 
-      const { isDisabled, className } = getDayClass(
+      const { isDisabled, className, rangeDisabled } = getDayClass(
         day,
         currentDate,
         today,
@@ -67,8 +69,12 @@ const DaysGrid = ({
       const daySelectValue =
         selectedDay && day.getTime() === selectedDay?.getTime() ? null : day;
       const handleDaySelect = () => {
-        if (!isDisabled && handleDayClick) {
+        if (handleDayClick) {
           handleDayClick(daySelectValue);
+          if (isDisabled) {
+            handleSetMonth(day.getMonth());
+            handleSetYear(day.getFullYear());
+          }
         }
       };
 
@@ -78,7 +84,7 @@ const DaysGrid = ({
           className={className}
           filltoday={fillTodayColor}
           fillholiday={fillHolidayColor}
-          disabled={isDisabled}
+          disabled={rangeDisabled}
           onClick={handleDaySelect}
         >
           {day.getDate()}

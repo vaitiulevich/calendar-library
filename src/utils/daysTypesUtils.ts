@@ -17,9 +17,10 @@ export const getDayClass = (
   const isCurrentMonthDay = day.getMonth() === currentDate.getMonth();
   const isDisabled =
     !isCurrentMonthDay ||
-    day.getFullYear() !== currentDate.getFullYear() ||
     (minDate ? day.getTime() < minDate : false) ||
     (maxDate ? day.getTime() > maxDate : false);
+
+  const rangeDisabled = day.getFullYear() !== currentDate.getFullYear();
 
   const isHolidayDate = isHoliday(day, holidays);
   const isWeekDay = isShowWeekDays ? isWeekday(day) : false;
@@ -39,7 +40,7 @@ export const getDayClass = (
     isEndDate,
   );
 
-  return { isDisabled, className };
+  return { isDisabled, className, rangeDisabled };
 };
 
 export const setDayClass = (

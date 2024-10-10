@@ -22,11 +22,13 @@ const CalendarContext = createContext<CalendarContextType | undefined>(
 
 interface CalendarProviderProps {
   initialDate?: Date;
+  rangeYears?: [number, number];
   children: ReactNode;
 }
 export const CalendarProvider: React.FC<CalendarProviderProps> = ({
   children,
   initialDate,
+  rangeYears,
 }) => {
   const [currentDate, setCurrentDate] = useState(initialDate ?? new Date());
 
@@ -37,6 +39,16 @@ export const CalendarProvider: React.FC<CalendarProviderProps> = ({
       setCurrentDate(selectedDay);
     }
   }, [selectedDay]);
+
+  useEffect(() => {
+    if (
+      rangeYears &&
+      (currentDate.getFullYear() < rangeYears[0] ||
+        currentDate.getFullYear() > rangeYears[1])
+    ) {
+      handleSetYear(rangeYears[0]);
+    }
+  }, [rangeYears]);
 
   const handleDayClick = useCallback((day: Date | null) => {
     setSelectedDay(day);
