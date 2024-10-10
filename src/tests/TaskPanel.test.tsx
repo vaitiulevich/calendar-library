@@ -1,14 +1,14 @@
 import React from 'react';
+import TaskPanel from '@components/TaskPanel/TaskPanel';
+import { Task } from '@store/ToDoContext';
 import {
-  render,
   fireEvent,
   getAllByAltText,
-  getByRole,
   getByAltText,
+  getByRole,
   getByTestId,
+  render,
 } from '@testing-library/react';
-import { Task } from '@store/ToDoContext';
-import TaskPanel from '@components/TaskPanel/TaskPanel';
 
 const mockTasks: Task[] = [
   { id: '1', task: 'Test task 1' },

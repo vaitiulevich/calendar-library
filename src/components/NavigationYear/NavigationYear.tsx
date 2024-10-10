@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import { DecadeHeader, NavigationButton } from './styled';
 import { images } from '@constants/images';
+
+import { DecadeHeader, NavigationButton } from './styled';
 
 interface NavigationYearsProps {
   currentYear: number;

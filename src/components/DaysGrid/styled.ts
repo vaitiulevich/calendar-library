@@ -33,7 +33,8 @@ export const DayButton = styled.button<{
   }
 
   &.holiday {
-    border: 2px solid ${({ fillholiday }) => fillholiday};
+    color: ${({ fillholiday }) => fillholiday};
+    text-decoration-line: underline;
   }
 
   &.today {

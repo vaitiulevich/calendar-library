@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from 'react';
+import { useCallback,useEffect, useState } from 'react';
 import { getDaysInMonth } from '@utils/getDaysInMonth';
 
 const useUpdateDaysForMonth = (
@@ -19,7 +19,7 @@ const useUpdateDaysForMonth = (
 
   useEffect(() => {
     updateDaysForMonth(thisMonthDate ?? currentDate);
-  }, [currentDate]);
+  }, [currentDate, startOfWeek, rangeYears]);
 
   return days;
 };

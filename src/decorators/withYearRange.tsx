@@ -1,17 +1,19 @@
+import React from 'react';
 import { DateInputProps } from '@components/DateInput/DateInput';
 import { defRange } from '@constants/constants';
-import React from 'react';
 
 interface WithYearRangeProps {
   rangeYears: [number, number];
   handleSelectDate: (date: Date | null) => void;
   labelText?: string;
+  value?: Date | null;
 }
 
 const withYearRange = (WrappedComponent: React.FC<DateInputProps>) => {
   return ({
     rangeYears = defRange,
     labelText,
+    value,
     ...props
   }: WithYearRangeProps) => {
     const validateYear = (year: string) => {
@@ -20,11 +22,11 @@ const withYearRange = (WrappedComponent: React.FC<DateInputProps>) => {
       if (yearNum > rangeYears[1]) return `${rangeYears[1]}`;
       return year;
     };
-
     return (
       <WrappedComponent
         {...props}
         labelText={labelText}
+        value={value}
         validateYear={validateYear}
       />
     );

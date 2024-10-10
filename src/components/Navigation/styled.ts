@@ -6,6 +6,7 @@ export const MonthHeader = styled.h2`
   font-size: 18px;
   color: #333;
   font-weight: bold;
+  text-wrap: nowrap;
 `;
 
 export const NavigationWrapper = styled.div`

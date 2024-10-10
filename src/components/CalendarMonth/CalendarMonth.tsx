@@ -1,15 +1,15 @@
-import { memo, useCallback, useEffect, useMemo } from 'react';
+import { memo } from 'react';
 import React from 'react';
 import { IHoliday } from '@components/Calendar/Calendar';
-import { WeekStart } from '@services/CalendarEnums';
 import DaysGrid from '@components/DaysGrid/DaysGrid';
 import Navigation from '@components/Navigation/Navigation';
 import { defRange } from '@constants/constants';
+import { WeekStart } from '@services/CalendarEnums';
 import { useCalendarContext } from '@store/CalendarContext';
-import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
 import { Task } from '@store/ToDoContext';
+import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
 
-export interface CalendarMonthProps {
+export interface CalendarTypeProps {
   minDate?: number;
   maxDate?: number;
   fillTodayColor?: string;
@@ -18,7 +18,7 @@ export interface CalendarMonthProps {
   holidays?: IHoliday[];
   startOfWeek?: string;
   rangeYears?: [number, number];
-  handleDayClick?: (day: Date) => void;
+  handleDayClick?: (day: Date | null) => void;
   selectedDay?: Date | null;
   tasks?: { [key: string]: Task[] };
   isInRange?: (date: string) => boolean;
@@ -41,9 +41,10 @@ const CalendarMonth = ({
   isInRange,
   startDate,
   endDate,
-}: CalendarMonthProps) => {
+}: CalendarTypeProps) => {
   const { currentDate, today, handleSetMonth, handleSetYear } =
     useCalendarContext();
+
   const days = useUpdateDaysForMonth(
     rangeYears,
     startOfWeek,

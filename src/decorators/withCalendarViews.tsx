@@ -1,11 +1,12 @@
 import React from 'react';
-import { CalendarProvider } from '@store/CalendarContext';
-import { ToDoListProvider } from '@store/ToDoContext';
-import withToDoList from '@decorators/withToDoList';
+import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 import withDatepicker from '@decorators/withDatepicker';
 import withDateRangePicker from '@decorators/withDateRange/withDateRangePicker';
+import withToDoList from '@decorators/withToDoList';
+import { CalendarProvider } from '@store/CalendarContext';
+import { ToDoListProvider } from '@store/ToDoContext';
+
 import { CalendarProps } from '../../src/components/Calendar/Calendar';
-import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
 
 export interface DynamicViewsProps extends CalendarProps {
   isToDoList?: boolean;

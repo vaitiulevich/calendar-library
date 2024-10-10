@@ -1,9 +1,10 @@
 import React, {
   createContext,
-  useContext,
-  useCallback,
-  useState,
   ReactNode,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
 } from 'react';
 
 interface CalendarContextType {
@@ -11,7 +12,7 @@ interface CalendarContextType {
   handleSetMonth: (selectMonth: number) => void;
   handleSetYear: (selectYear: number) => void;
   today: Date;
-  handleDayClick: (day: Date) => void;
+  handleDayClick: (day: Date | null) => void;
   selectedDay: Date | null;
 }
 
@@ -31,8 +32,14 @@ export const CalendarProvider: React.FC<CalendarProviderProps> = ({
 
   const [selectedDay, setSelectedDay] = useState<Date | null>(null);
 
-  const handleDayClick = useCallback((day: Date) => {
-    setSelectedDay((prev) => (prev === day ? null : day));
+  useEffect(() => {
+    if (selectedDay) {
+      setCurrentDate(selectedDay);
+    }
+  }, [selectedDay]);
+
+  const handleDayClick = useCallback((day: Date | null) => {
+    setSelectedDay(day);
   }, []);
   const today = new Date();
 

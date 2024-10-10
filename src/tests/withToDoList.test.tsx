@@ -1,9 +1,9 @@
-import { render } from '@testing-library/react';
-import { useToDoContext } from '@store/ToDoContext';
-import { useCalendarContext } from '@store/CalendarContext';
-import withToDoList from '@decorators/withToDoList';
 import { CalendarProps } from '@components/Calendar/Calendar';
 import { defRange } from '@constants/constants';
+import withToDoList from '@decorators/withToDoList';
+import { useCalendarContext } from '@store/CalendarContext';
+import { useToDoContext } from '@store/ToDoContext';
+import { render } from '@testing-library/react';
 
 jest.mock('@store/ToDoContext', () => ({
   useToDoContext: jest.fn(),

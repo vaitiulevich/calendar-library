@@ -1,30 +1,30 @@
 import React from 'react';
-import { CalendarWrapper } from './styled';
-import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
-import { defMaxDate, defMinDate, defRange } from '@constants/constants';
 import CalendarMonth from '@components/CalendarMonth/CalendarMonth';
 import CalendarWeek from '@components/CalendarWeek/CalendarWeek';
 import CalendarYaer from '@components/CalendarYaer/CalendarYaer';
-import { Task } from '../../store/ToDoContext';
-import { CalendarProvider } from '@store/CalendarContext';
 import ErrorBoundary from '@components/ErrorBoundary/ErrorBoundary';
+import { defMaxDate, defMinDate, defRange } from '@constants/constants';
+import { CalendarTypes, WeekStart } from '@services/CalendarEnums';
+
 import withCalendarViews from '../../decorators/withCalendarViews';
+import { Task } from '../../store/ToDoContext';
+import { CalendarWrapper } from './styled';
 
 export interface IHoliday {
   title: string;
   date: Date;
 }
 export interface CalendarProps {
-  type?: 'month' | 'week' | 'year';
+  type?: CalendarTypes.Month | CalendarTypes.Week | CalendarTypes.Yaer;
   fillTodayColor?: string;
   fillHolidayColor?: string;
-  startOfWeek?: 'sunday' | 'monday';
+  startOfWeek?: WeekStart.Sunday | WeekStart.Monday;
   rangeYears: [number, number];
   minDate?: number;
   maxDate?: number;
   isShowWeekDays?: boolean;
   holidays?: IHoliday[];
-  handleDayClick?: (day: Date) => void;
+  handleDayClick?: (day: Date | null) => void;
   selectedDay?: Date | null;
   tasks?: { [key: string]: Task[] };
   isInRange?: (date: string) => boolean;
@@ -33,13 +33,13 @@ export interface CalendarProps {
 }
 
 const Calendar = ({
-  type = 'month',
+  type = CalendarTypes.Month,
   minDate = defMinDate,
   maxDate = defMaxDate,
-  startOfWeek = 'monday',
+  startOfWeek = WeekStart.Monday,
   rangeYears = defRange,
   fillTodayColor = '#007bff',
-  fillHolidayColor,
+  fillHolidayColor = '#007bff',
   isShowWeekDays = false,
   holidays,
   handleDayClick,
@@ -49,61 +49,36 @@ const Calendar = ({
   startDate,
   endDate,
 }: CalendarProps) => {
+  const calendarProps = {
+    minDate,
+    maxDate,
+    startOfWeek,
+    isShowWeekDays,
+    fillHolidayColor,
+    fillTodayColor,
+    holidays,
+    rangeYears,
+    handleDayClick,
+    selectedDay,
+    tasks,
+    isInRange,
+    startDate,
+    endDate,
+  };
   const renderCalendarType = () => {
     switch (type) {
       case CalendarTypes.Month:
-        return (
-          <CalendarMonth
-            minDate={minDate}
-            maxDate={maxDate}
-            startOfWeek={startOfWeek}
-            isShowWeekDays={isShowWeekDays}
-            fillHolidayColor={fillHolidayColor}
-            fillTodayColor={fillTodayColor}
-            holidays={holidays}
-            rangeYears={rangeYears}
-            handleDayClick={handleDayClick}
-            selectedDay={selectedDay}
-            tasks={tasks}
-            isInRange={isInRange}
-            startDate={startDate}
-            endDate={endDate}
-          />
-        );
+        return <CalendarMonth {...calendarProps} />;
       case CalendarTypes.Week:
-        return (
-          <CalendarWeek
-            minDate={minDate}
-            maxDate={maxDate}
-            startOfWeek={startOfWeek}
-            isShowWeekDays={isShowWeekDays}
-            fillHolidayColor={fillHolidayColor}
-            fillTodayColor={fillTodayColor}
-            holidays={holidays}
-            rangeYears={rangeYears}
-          />
-        );
+        return <CalendarWeek {...calendarProps} />;
       case CalendarTypes.Yaer:
-        return (
-          <CalendarYaer
-            minDate={minDate}
-            maxDate={maxDate}
-            startOfWeek={startOfWeek}
-            isShowWeekDays={isShowWeekDays}
-            fillHolidayColor={fillHolidayColor}
-            fillTodayColor={fillTodayColor}
-            holidays={holidays}
-            rangeYears={rangeYears}
-          />
-        );
+        return <CalendarYaer {...calendarProps} />;
     }
   };
 
   return (
     <ErrorBoundary>
-      <CalendarProvider initialDate={new Date()}>
-        <CalendarWrapper>{renderCalendarType()}</CalendarWrapper>
-      </CalendarProvider>
+      <CalendarWrapper>{renderCalendarType()}</CalendarWrapper>
     </ErrorBoundary>
   );
 };

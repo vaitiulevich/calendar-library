@@ -1,14 +1,14 @@
-import React, { useState, useCallback, memo, useEffect } from 'react';
-import { ClearButton, InputContainer, InputLabel, StyledInput } from './styled';
-import { images } from '@constants/images';
-
+import React, { memo, useCallback, useEffect,useState } from 'react';
 import { countMonths, maxYearLength } from '@constants/constants';
+import { images } from '@constants/images';
 import {
   createValidatedDate,
   formatInputValue,
   validateDay,
   validateMonth,
 } from '@utils/dateUtils';
+
+import { ClearButton, InputContainer, InputLabel, StyledInput } from './styled';
 
 export interface DateInputProps {
   handleSelectDate: (date: Date | null) => void;

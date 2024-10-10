@@ -1,24 +1,13 @@
-import { memo, useCallback, useState } from 'react';
+import { memo, useCallback, useEffect, useState } from 'react';
 import React from 'react';
-import { IHoliday } from '@components/Calendar/Calendar';
-import { WeekStart } from '@services/CalendarEnums';
+import { CalendarTypeProps } from '@components/CalendarMonth/CalendarMonth';
 import DaysGrid from '@components/DaysGrid/DaysGrid';
-import { defRange } from '@constants/constants';
-import { useCalendarContext } from '@store/CalendarContext';
 import NavigationWeek from '@components/NavigationWeek/NavigationWeek';
+import { defRange } from '@constants/constants';
+import { WeekStart } from '@services/CalendarEnums';
+import { useCalendarContext } from '@store/CalendarContext';
 import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
 import useWeeks from '@utils/useWeeks';
-
-interface CalendarWeekProps {
-  minDate?: number;
-  maxDate?: number;
-  fillTodayColor?: string;
-  fillHolidayColor?: string;
-  isShowWeekDays?: boolean;
-  holidays?: IHoliday[];
-  startOfWeek?: string;
-  rangeYears?: [number, number];
-}
 
 const CalendarWeek = ({
   minDate,
@@ -29,12 +18,18 @@ const CalendarWeek = ({
   holidays,
   startOfWeek = WeekStart.Monday,
   rangeYears = defRange,
-}: CalendarWeekProps) => {
+  handleDayClick,
+  selectedDay,
+  tasks,
+  isInRange,
+  startDate,
+  endDate,
+}: CalendarTypeProps) => {
   const { currentDate, today, handleSetMonth } = useCalendarContext();
 
   const [weekOffset, setWeekOffset] = useState(() => {
     const today = new Date();
-    return Math.floor(today.getDate() / 7);
+    return Math.ceil(today.getDate() / 7) - 1;
   });
 
   const days = useUpdateDaysForMonth(
@@ -43,6 +38,15 @@ const CalendarWeek = ({
     null,
     currentDate,
   );
+
+  useEffect(() => {
+    const day = selectedDay ?? today;
+    let weekNum = Math.ceil(day.getDate() / 7);
+    if (!selectedDay) {
+      weekNum = weekNum - 1;
+    }
+    setWeekOffset(weekNum);
+  }, [selectedDay]);
 
   const handleSetWeek = useCallback((week: number) => {
     setWeekOffset(week);
@@ -72,6 +76,13 @@ const CalendarWeek = ({
           fillTodayColor={fillTodayColor}
           holidays={holidays}
           isShowWeekDays={isShowWeekDays}
+          tasks={tasks}
+          startOfWeek={startOfWeek}
+          handleDayClick={handleDayClick}
+          selectedDay={selectedDay}
+          isInRange={isInRange}
+          startDate={startDate}
+          endDate={endDate}
         />
       </>
     )

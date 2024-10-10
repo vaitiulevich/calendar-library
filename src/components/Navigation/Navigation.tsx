@@ -1,7 +1,8 @@
-import { memo, useState } from 'react';
-import { MonthHeader, NavigationButton, NavigationWrapper } from './styled';
+import { memo } from 'react';
 import React from 'react';
 import { images } from '@constants/images';
+
+import { MonthHeader, NavigationButton, NavigationWrapper } from './styled';
 
 const Navigation = ({
   currentDate,
@@ -26,8 +27,8 @@ const Navigation = ({
 
   const isPrevMonthDisabled = year === rangeYears[0] && isFirstMonth;
   const isNextMonthDisabled = year === rangeYears[1] && isLastMonth;
-  const isPrevYearDisabled = year - 1 !== rangeYears[0];
-  const isNextYearDisabled = year + 1 !== rangeYears[1];
+  const isPrevYearDisabled = year - 1 < rangeYears[0];
+  const isNextYearDisabled = year + 1 > rangeYears[1];
 
   const handlePrevMonth = () => onSetMonth(currentDate.getMonth() - 1);
   const handleNextMonth = () => onSetMonth(currentDate.getMonth() + 1);

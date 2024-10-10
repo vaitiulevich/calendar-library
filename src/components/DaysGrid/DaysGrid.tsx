@@ -1,11 +1,12 @@
 import React, { memo } from 'react';
-import { DayButton, DaysGridContainer, TaskIndicator } from './styled';
 import { IHoliday } from '@components/Calendar/Calendar';
 import Weekdays from '@components/Weekdays/Weekdays';
-import { WeekStart } from '@services/CalendarEnums';
 import { defMaxDate, defMinDate } from '@constants/constants';
-import { getDayClass } from '@utils/daysTypesUtils';
+import { WeekStart } from '@services/CalendarEnums';
 import { Task } from '@store/ToDoContext';
+import { getDayClass } from '@utils/daysTypesUtils';
+
+import { DayButton, DaysGridContainer, TaskIndicator } from './styled';
 
 interface IDays {
   days: Date[];
@@ -18,7 +19,7 @@ interface IDays {
   isShowWeekDays?: boolean;
   holidays?: IHoliday[];
   startOfWeek?: string;
-  handleDayClick?: (date: Date) => void;
+  handleDayClick?: (date: Date | null) => void;
   selectedDay?: Date | null;
   tasks?: { [key: string]: Task[] };
   isInRange?: (date: string) => boolean;
@@ -63,6 +64,13 @@ const DaysGrid = ({
         endDate,
         isRange,
       );
+      const daySelectValue =
+        selectedDay && day.getTime() === selectedDay?.getTime() ? null : day;
+      const handleDaySelect = () => {
+        if (!isDisabled && handleDayClick) {
+          handleDayClick(daySelectValue);
+        }
+      };
 
       return (
         <DayButton
@@ -71,11 +79,7 @@ const DaysGrid = ({
           filltoday={fillTodayColor}
           fillholiday={fillHolidayColor}
           disabled={isDisabled}
-          onClick={() => {
-            if (!isDisabled && handleDayClick) {
-              handleDayClick(day);
-            }
-          }}
+          onClick={handleDaySelect}
         >
           {day.getDate()}
           {hasTasks && <TaskIndicator filltoday={fillTodayColor} />}

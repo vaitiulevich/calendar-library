@@ -1,22 +1,11 @@
 import { memo } from 'react';
 import React from 'react';
-import { IHoliday } from '@components/Calendar/Calendar';
-import YearsGrid from '@components/YearsGrid/YearsGrid';
-import { WeekStart } from '@services/CalendarEnums';
-import { defRange } from '@constants/constants';
-import { useCalendarContext } from '@store/CalendarContext';
+import { CalendarTypeProps } from '@components/CalendarMonth/CalendarMonth';
 import NavigationYear from '@components/NavigationYear/NavigationYear';
-
-interface CalendarMonthProps {
-  minDate?: number;
-  maxDate?: number;
-  fillTodayColor?: string;
-  fillHolidayColor?: string;
-  isShowWeekDays?: boolean;
-  holidays?: IHoliday[];
-  startOfWeek?: string;
-  rangeYears?: [number, number];
-}
+import YearsGrid from '@components/YearsGrid/YearsGrid';
+import { defRange } from '@constants/constants';
+import { WeekStart } from '@services/CalendarEnums';
+import { useCalendarContext } from '@store/CalendarContext';
 
 const CalendarYaer = ({
   minDate,
@@ -27,8 +16,14 @@ const CalendarYaer = ({
   holidays,
   startOfWeek = WeekStart.Monday,
   rangeYears = defRange,
-}: CalendarMonthProps) => {
-  const { currentDate, handleSetYear } = useCalendarContext();
+  handleDayClick,
+  selectedDay,
+  tasks,
+  isInRange,
+  startDate,
+  endDate,
+}: CalendarTypeProps) => {
+  const { currentDate, handleSetYear, today } = useCalendarContext();
   return (
     <>
       <NavigationYear
@@ -37,6 +32,7 @@ const CalendarYaer = ({
         handleSetYear={handleSetYear}
       />
       <YearsGrid
+        tasks={tasks}
         startOfWeek={startOfWeek}
         minDate={minDate}
         maxDate={maxDate}
@@ -45,6 +41,11 @@ const CalendarYaer = ({
         rangeYears={rangeYears}
         fillTodayColor={fillTodayColor}
         fillHolidayColor={fillHolidayColor}
+        handleDayClick={handleDayClick}
+        selectedDay={selectedDay}
+        isInRange={isInRange}
+        startDate={startDate}
+        endDate={endDate}
       />
     </>
   );

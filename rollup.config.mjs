@@ -1,18 +1,18 @@
-import peerDepsExternal from 'rollup-plugin-peer-deps-external';
-import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
-import postcss from 'rollup-plugin-postcss';
-import dts from 'rollup-plugin-dts';
-import path from 'path';
-import image from 'rollup-plugin-image';
-import copy from 'rollup-plugin-copy';
-import packageJson from './package.json' with { type: 'json' };
-import alias from 'rollup-plugin-alias';
 import url from '@rollup/plugin-url';
-
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import path from 'path';
+import alias from 'rollup-plugin-alias';
+import copy from 'rollup-plugin-copy';
+import dts from 'rollup-plugin-dts';
+import image from 'rollup-plugin-image';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
+import postcss from 'rollup-plugin-postcss';
+
+import packageJson from './package.json' with { type: 'json' };
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 

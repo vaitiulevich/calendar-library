@@ -1,6 +1,4 @@
 import React, { memo } from 'react';
-import { NavigationButton, NavigationWeeks } from './styled';
-import { images } from '@constants/images';
 import {
   DAYS_IN_A_WEEK,
   FIRST_MONTH_INDEX,
@@ -8,6 +6,9 @@ import {
   LAST_MONTH_INDEX,
   MAX_DAYS_IN_A_MONTH,
 } from '@constants/constants';
+import { images } from '@constants/images';
+
+import { NavigationButton, NavigationWeeks } from './styled';
 
 interface NavigationYearsProps {
   currentDate: Date;

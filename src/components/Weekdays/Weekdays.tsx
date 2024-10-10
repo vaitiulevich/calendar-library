@@ -1,8 +1,9 @@
 import { memo, useMemo } from 'react';
 import React from 'react';
-import { WeekdaysRow } from './styled';
 import { weekdaysMondayStart, weekdaysSundayStart } from '@constants/constants';
 import { WeekStart } from '@services/CalendarEnums';
+
+import { WeekdaysRow } from './styled';
 
 const Weekdays = ({ startOfWeek }: { startOfWeek: string }) => {
   const weekdays = useMemo(

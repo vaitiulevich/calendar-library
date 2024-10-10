@@ -1,9 +1,9 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import Calendar from '@components/Calendar/Calendar';
+import { defRange } from '@constants/constants';
 import withDatepicker from '@decorators/withDatepicker';
 import { CalendarProvider } from '@store/CalendarContext';
-import { defRange } from '@constants/constants';
-import Calendar from '@components/Calendar/Calendar';
+import { fireEvent,render, screen } from '@testing-library/react';
 
 const MockComponent = () => <Calendar rangeYears={defRange} />;
 

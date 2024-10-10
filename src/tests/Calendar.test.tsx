@@ -1,10 +1,10 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
 import Calendar from '@components/Calendar/Calendar';
+import { IHoliday } from '@components/Calendar/Calendar';
 import { CalendarProvider } from '@store/CalendarContext';
 import { ToDoListProvider } from '@store/ToDoContext';
+import { render, screen } from '@testing-library/react';
 import { getDayClass } from '@utils/daysTypesUtils';
-import { IHoliday } from '@components/Calendar/Calendar';
 
 test('renders currect month', () => {
   render(

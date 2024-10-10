@@ -1,5 +1,5 @@
-import { DateInputProps } from '@components/DateInput/DateInput';
 import React from 'react';
+import { DateInputProps } from '@components/DateInput/DateInput';
 
 interface WithRangeDateProps {
   handleSelectDate: (date: Date | null) => void;

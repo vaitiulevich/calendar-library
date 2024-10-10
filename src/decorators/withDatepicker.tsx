@@ -1,8 +1,8 @@
 import React, { useCallback } from 'react';
-import { useCalendarContext } from '@store/CalendarContext';
+import { CalendarProps } from '@components/Calendar/Calendar';
 import DateInput from '@components/DateInput/DateInput';
 import withYearRange from '@decorators/withYearRange';
-import { CalendarProps } from '@components/Calendar/Calendar';
+import { useCalendarContext } from '@store/CalendarContext';
 
 const EnhancedDateInput = withYearRange(DateInput);
 const withDatepicker = (
@@ -10,7 +10,6 @@ const withDatepicker = (
 ) => {
   const WithDatepicker = (props: CalendarProps) => {
     const {
-      currentDate,
       handleSetMonth,
       handleSetYear,
       today,
@@ -18,24 +17,26 @@ const withDatepicker = (
       handleDayClick,
     } = useCalendarContext();
 
-    const handleSelectDate = useCallback(
-      (date: Date | null) => {
-        const day = date ?? today;
-        handleSetMonth(day.getMonth());
-        handleSetYear(day.getFullYear());
-        handleDayClick(day);
-      },
-      [currentDate],
-    );
+    const handleSelectDate = useCallback((date: Date | null) => {
+      const day = date || today;
+      handleSetMonth(day.getMonth());
+      handleSetYear(day.getFullYear());
+      handleDayClick(date);
+    }, []);
 
     return (
       <>
         <EnhancedDateInput
           handleSelectDate={handleSelectDate}
           rangeYears={props.rangeYears}
+          value={selectedDay}
           labelText="Date"
         />
-        <WrappedComponent selectedDay={selectedDay} {...props} />
+        <WrappedComponent
+          handleDayClick={handleSelectDate}
+          selectedDay={selectedDay}
+          {...props}
+        />
       </>
     );
   };

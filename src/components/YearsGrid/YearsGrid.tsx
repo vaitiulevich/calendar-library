@@ -1,34 +1,29 @@
-import React, { useCallback, useMemo } from 'react';
-import { MonthTitle, YearButton, YearsGridWrapper } from './styled';
+import React from 'react';
+import { CalendarTypeProps } from '@components/CalendarMonth/CalendarMonth';
+import DaysGrid from '@components/DaysGrid/DaysGrid';
 import { defRange, months } from '@constants/constants';
 import { WeekStart } from '@services/CalendarEnums';
-import DaysGrid from '@components/DaysGrid/DaysGrid';
 import { useCalendarContext } from '@store/CalendarContext';
-import { getDaysInMonth } from '@utils/getDaysInMonth';
-import { IHoliday } from '@components/Calendar/Calendar';
 import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
 
-interface YearsGridProps {
-  fillTodayColor?: string;
-  fillHolidayColor?: string;
-  startOfWeek: string;
-  rangeYears?: [number, number];
-  isShowWeekDays?: boolean;
-  minDate?: number;
-  maxDate?: number;
-  holidays?: IHoliday[];
-}
+import { MonthTitle, YearButton, YearsGridWrapper } from './styled';
 
-const YearsGrid: React.FC<YearsGridProps> = ({
-  fillHolidayColor,
-  fillTodayColor,
-  isShowWeekDays,
-  startOfWeek,
-  rangeYears,
+const YearsGrid = ({
   minDate,
   maxDate,
+  fillTodayColor,
+  fillHolidayColor,
+  isShowWeekDays,
   holidays,
-}) => {
+  startOfWeek = WeekStart.Monday,
+  rangeYears = defRange,
+  handleDayClick,
+  selectedDay,
+  tasks,
+  isInRange,
+  startDate,
+  endDate,
+}: CalendarTypeProps) => {
   const { currentDate, today } = useCalendarContext();
   const renderYears = () => {
     return months.map((month, index) => {
@@ -52,6 +47,13 @@ const YearsGrid: React.FC<YearsGridProps> = ({
             minDate={minDate}
             today={today}
             days={days}
+            tasks={tasks}
+            startOfWeek={startOfWeek}
+            handleDayClick={handleDayClick}
+            selectedDay={selectedDay}
+            isInRange={isInRange}
+            startDate={startDate}
+            endDate={endDate}
           />
         </YearButton>
       );

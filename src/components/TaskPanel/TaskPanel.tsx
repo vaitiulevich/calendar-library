@@ -1,4 +1,8 @@
 import React, { memo, useState } from 'react';
+import { maxLengthTask } from '@constants/constants';
+import { images } from '@constants/images';
+import { Task } from '@store/ToDoContext';
+
 import {
   AddButton,
   CloseButton,
@@ -10,9 +14,6 @@ import {
   TaskList,
   TaskTitle,
 } from './styled';
-import { images } from '@constants/images';
-import { maxLengthTask } from '@constants/constants';
-import { Task } from '@store/ToDoContext';
 
 interface TaskPanelProps {
   date: Date | null;

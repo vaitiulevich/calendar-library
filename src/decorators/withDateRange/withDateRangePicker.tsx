@@ -1,6 +1,7 @@
+import React, { useState } from 'react';
 import { CalendarProps } from '@components/Calendar/Calendar';
 import DateInput from '@components/DateInput/DateInput';
-import React, { useState } from 'react';
+
 import withRangeByDate from '../withRangeByDates';
 import { ClearButton, RangeCalendatContainer } from './styled';
 

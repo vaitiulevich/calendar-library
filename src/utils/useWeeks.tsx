@@ -1,5 +1,5 @@
-import { DAYS_IN_A_WEEK } from '@constants/constants';
 import { useMemo } from 'react';
+import { DAYS_IN_A_WEEK } from '@constants/constants';
 
 const useWeeks = (days: Date[]) => {
   return useMemo(() => {
