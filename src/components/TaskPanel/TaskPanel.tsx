@@ -1,4 +1,10 @@
-import React, { memo, useState } from 'react';
+import React, {
+  ChangeEvent,
+  FormEvent,
+  KeyboardEvent,
+  memo,
+  useState,
+} from 'react';
 import { maxLengthTask } from '@constants/constants';
 import { images } from '@constants/images';
 import { Task } from '@store/ToDoContext';
@@ -32,7 +38,7 @@ const TaskPanel: React.FC<TaskPanelProps> = ({
 }) => {
   const [newTask, setNewTask] = useState('');
 
-  const submitTask = (e: React.FormEvent) => {
+  const submitTask = (e: FormEvent) => {
     e.preventDefault();
     if (newTask && date) {
       handleAddTask(date.toDateString(), newTask);
@@ -40,13 +46,13 @@ const TaskPanel: React.FC<TaskPanelProps> = ({
     }
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
       submitTask(e);
     }
   };
 
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeInput = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     const isEmtyValue = value.trim() !== '' || value.length === 0;
     if (isEmtyValue) {

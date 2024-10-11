@@ -18,14 +18,14 @@ interface NavigationYearsProps {
   weekOffset: number;
   weeks: Date[][];
 }
-const NavigationWeek = ({
+const NavigationWeek: React.FC<NavigationYearsProps> = ({
   currentDate,
   rangeYears,
   handleSetMonth,
   handleSetWeek,
   weekOffset,
   weeks,
-}: NavigationYearsProps) => {
+}) => {
   const handleNextWeek = () => {
     if (weekOffset + 1 >= weeks.length) {
       handleSetWeek(INITIAL_WEEK_OFFSET);

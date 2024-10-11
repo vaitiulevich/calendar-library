@@ -2,13 +2,13 @@ import React from 'react';
 import { CalendarTypeProps } from '@components/CalendarMonth/CalendarMonth';
 import DaysGrid from '@components/DaysGrid/DaysGrid';
 import { defRange, months } from '@constants/constants';
+import useUpdateDaysForMonth from '@hooks/useUpdateDaysForMonth';
 import { WeekStart } from '@services/CalendarEnums';
 import { useCalendarContext } from '@store/CalendarContext';
-import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
 
 import { MonthTitle, YearButton, YearsGridWrapper } from './styled';
 
-const YearsGrid = ({
+const YearsGrid: React.FC<CalendarTypeProps> = ({
   minDate,
   maxDate,
   fillTodayColor,
@@ -23,7 +23,7 @@ const YearsGrid = ({
   isInRange,
   startDate,
   endDate,
-}: CalendarTypeProps) => {
+}) => {
   const { currentDate, today } = useCalendarContext();
   const renderYears = () => {
     return months.map((month, index) => {

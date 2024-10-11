@@ -4,10 +4,10 @@ import { IHoliday } from '@components/Calendar/Calendar';
 import DaysGrid from '@components/DaysGrid/DaysGrid';
 import Navigation from '@components/Navigation/Navigation';
 import { defRange } from '@constants/constants';
+import useUpdateDaysForMonth from '@hooks/useUpdateDaysForMonth';
 import { WeekStart } from '@services/CalendarEnums';
 import { useCalendarContext } from '@store/CalendarContext';
 import { Task } from '@store/ToDoContext';
-import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
 
 export interface CalendarTypeProps {
   minDate?: number;
@@ -26,7 +26,7 @@ export interface CalendarTypeProps {
   endDate?: Date;
 }
 
-const CalendarMonth = ({
+const CalendarMonth: React.FC<CalendarTypeProps> = ({
   minDate,
   maxDate,
   fillTodayColor,
@@ -41,7 +41,7 @@ const CalendarMonth = ({
   isInRange,
   startDate,
   endDate,
-}: CalendarTypeProps) => {
+}) => {
   const { currentDate, today, handleSetMonth, handleSetYear } =
     useCalendarContext();
 

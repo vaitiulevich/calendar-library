@@ -8,8 +8,6 @@ import React, {
 import { titleTaskStorage } from '@constants/constants';
 
 interface ToDoContextType {
-  // handleDayClick: (day: Date) => void;
-  // selectedDay: Date | null;
   tasks: { [key: string]: Task[] };
   handleAddTask: (date: string, task: string) => void;
   handleRemoveTask: (date: string, taskId: string) => void;

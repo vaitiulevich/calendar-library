@@ -1,4 +1,10 @@
-import React, { memo, useCallback, useEffect,useState } from 'react';
+import React, {
+  ChangeEvent,
+  memo,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react';
 import { countMonths, maxYearLength } from '@constants/constants';
 import { images } from '@constants/images';
 import {
@@ -28,6 +34,10 @@ const DateInput: React.FC<DateInputProps> = ({
   const regExInput = (input: string) => input.replace(/\D/g, '');
 
   useEffect(() => {
+    setInputValueChange(value);
+  }, [value]);
+
+  const setInputValueChange = (value: Date | null | undefined) => {
     if (value) {
       const day = String(value.getDate()).padStart(2, '0');
       const month = String(value.getMonth() + 1).padStart(2, '0');
@@ -36,9 +46,9 @@ const DateInput: React.FC<DateInputProps> = ({
     } else {
       setInputValue('');
     }
-  }, [value]);
+  };
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const regExValue = regExInput(event.target.value);
     const { day, month, year } = formatInputValue(regExValue, maxYearLength);
 

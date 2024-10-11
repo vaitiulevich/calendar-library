@@ -32,7 +32,7 @@ export interface CalendarProps {
   endDate?: Date;
 }
 
-const Calendar = ({
+const Calendar: React.FC<CalendarProps> = ({
   type = CalendarTypes.Month,
   minDate = defMinDate,
   maxDate = defMaxDate,
@@ -48,7 +48,7 @@ const Calendar = ({
   isInRange,
   startDate,
   endDate,
-}: CalendarProps) => {
+}) => {
   const calendarProps = {
     minDate,
     maxDate,

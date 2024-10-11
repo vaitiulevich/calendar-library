@@ -28,6 +28,7 @@ const config: StorybookConfig = {
         '@services': path.resolve(__dirname, '../src/services'),
         '@store': path.resolve(__dirname, '../src/store'),
         '@tests': path.resolve(__dirname, '../src/tests'),
+        '@hooks': path.resolve(__dirname, '../src/hooks'),
         '@types': path.resolve(__dirname, '../src/types'),
       };
     }

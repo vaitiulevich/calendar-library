@@ -4,12 +4,12 @@ import { CalendarTypeProps } from '@components/CalendarMonth/CalendarMonth';
 import DaysGrid from '@components/DaysGrid/DaysGrid';
 import NavigationWeek from '@components/NavigationWeek/NavigationWeek';
 import { defRange } from '@constants/constants';
+import useUpdateDaysForMonth from '@hooks/useUpdateDaysForMonth';
+import useWeeks from '@hooks/useWeeks';
 import { WeekStart } from '@services/CalendarEnums';
 import { useCalendarContext } from '@store/CalendarContext';
-import useUpdateDaysForMonth from '@utils/useUpdateDaysForMonth';
-import useWeeks from '@utils/useWeeks';
 
-const CalendarWeek = ({
+const CalendarWeek: React.FC<CalendarTypeProps> = ({
   minDate,
   maxDate,
   fillTodayColor,
@@ -24,7 +24,7 @@ const CalendarWeek = ({
   isInRange,
   startDate,
   endDate,
-}: CalendarTypeProps) => {
+}) => {
   const { currentDate, today, handleSetMonth } = useCalendarContext();
 
   const [weekOffset, setWeekOffset] = useState(() => {

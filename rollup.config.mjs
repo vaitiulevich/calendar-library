@@ -51,6 +51,10 @@ export default [
             replacement: path.resolve(__dirname, 'src/icons'),
           },
           {
+            find: '@hooks/',
+            replacement: path.resolve(__dirname, 'src/hooks'),
+          },
+          {
             find: '@utils/',
             replacement: path.resolve(__dirname, 'src/utils'),
           },

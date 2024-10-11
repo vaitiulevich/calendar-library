@@ -28,7 +28,7 @@ interface IDays {
   endDate?: Date;
 }
 
-const DaysGrid = ({
+const DaysGrid: React.FC<IDays> = ({
   days,
   currentDate,
   today,
@@ -45,7 +45,7 @@ const DaysGrid = ({
   isInRange,
   startDate,
   endDate,
-}: IDays) => {
+}) => {
   const renderDays = () => {
     const { handleSetMonth, handleSetYear } = useCalendarContext();
     return days.map((day, index) => {

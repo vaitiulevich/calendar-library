@@ -1,19 +1,22 @@
 import { memo } from 'react';
 import React from 'react';
+import { FIRST_MONTH_INDEX, LAST_MONTH_INDEX } from '@constants/constants';
 import { images } from '@constants/images';
 
 import { MonthHeader, NavigationButton, NavigationWrapper } from './styled';
 
-const Navigation = ({
-  currentDate,
-  onSetMonth,
-  onSetYear,
-  rangeYears,
-}: {
+interface NavigationProps {
   currentDate: Date;
   onSetMonth: (month: number) => void;
   onSetYear: (year: number) => void;
   rangeYears: [number, number];
+}
+
+const Navigation: React.FC<NavigationProps> = ({
+  currentDate,
+  onSetMonth,
+  onSetYear,
+  rangeYears,
 }) => {
   const currentMonthTitle = currentDate.toLocaleDateString('en-US', {
     month: 'long',
@@ -22,8 +25,8 @@ const Navigation = ({
   const year = currentDate.getFullYear();
   const month = currentDate.getMonth();
 
-  const isFirstMonth = month === 0;
-  const isLastMonth = month === 11;
+  const isFirstMonth = month === FIRST_MONTH_INDEX;
+  const isLastMonth = month === LAST_MONTH_INDEX;
 
   const isPrevMonthDisabled = year === rangeYears[0] && isFirstMonth;
   const isNextMonthDisabled = year === rangeYears[1] && isLastMonth;

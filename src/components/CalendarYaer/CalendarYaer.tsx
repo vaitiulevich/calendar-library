@@ -7,7 +7,7 @@ import { defRange } from '@constants/constants';
 import { WeekStart } from '@services/CalendarEnums';
 import { useCalendarContext } from '@store/CalendarContext';
 
-const CalendarYaer = ({
+const CalendarYaer: React.FC<CalendarTypeProps> = ({
   minDate,
   maxDate,
   fillTodayColor,
@@ -22,7 +22,7 @@ const CalendarYaer = ({
   isInRange,
   startDate,
   endDate,
-}: CalendarTypeProps) => {
+}) => {
   const { currentDate, handleSetYear, today } = useCalendarContext();
   return (
     <>

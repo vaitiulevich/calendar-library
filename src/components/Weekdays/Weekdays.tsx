@@ -5,7 +5,7 @@ import { WeekStart } from '@services/CalendarEnums';
 
 import { WeekdaysRow } from './styled';
 
-const Weekdays = ({ startOfWeek }: { startOfWeek: string }) => {
+const Weekdays: React.FC<{ startOfWeek: string }> = ({ startOfWeek }) => {
   const weekdays = useMemo(
     () =>
       startOfWeek === WeekStart.Monday
